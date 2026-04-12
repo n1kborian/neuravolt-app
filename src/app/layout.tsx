@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const geist = Geist({
@@ -32,6 +33,7 @@ export default function RootLayout({
     <html lang="de" className={`${geist.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-white text-[#0a0a0a]">
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
