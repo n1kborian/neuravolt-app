@@ -59,7 +59,7 @@ export default function PageClient() {
                   transition={{ duration: 0.5, delay: i * 0.07 }}
                 >
                   <Link href={href}
-                    className="group flex flex-col gap-4 p-6 rounded-2xl border border-border bg-background/80 backdrop-blur-sm shadow-lg transition-all duration-300 hover:border-foreground hover:shadow-xl h-full">
+                    className="group flex flex-col gap-4 p-6 rounded-2xl border border-border bg-background/80 backdrop-blur-sm shadow-lg transition-all duration-300 hover:border-brand hover:shadow-xl h-full">
                     <div className="flex items-center gap-3">
                       <div className="shrink-0 flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-background shadow-sm transition-all duration-300 group-hover:border-brand group-hover:bg-brand group-hover:text-brand-foreground">
                         <Icon className="h-5 w-5" />

@@ -126,7 +126,7 @@ export default function PageClient() {
                     initial={{ opacity: 0, scale: 0.94 }}
                     animate={legalIn ? { opacity: 1, scale: 1 } : {}}
                     transition={{ duration: 0.4, delay: 0.1 + i * 0.07 }}
-                    className="group rounded-2xl border border-border bg-background/80 backdrop-blur-sm p-5 shadow-lg transition-all duration-300 hover:border-foreground hover:shadow-xl">
+                    className="group rounded-2xl border border-border bg-background/80 backdrop-blur-sm p-5 shadow-lg transition-all duration-300 hover:border-brand hover:shadow-xl">
                     <div className="flex items-center gap-3 mb-3">
                       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-border bg-background shadow-sm transition-all duration-300 group-hover:border-brand group-hover:bg-brand group-hover:text-brand-foreground">
                         <Scale className="h-3.5 w-3.5" />

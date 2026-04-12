@@ -86,7 +86,7 @@ export default function PageClient() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={benefitIn ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: i * 0.07 }}
-                  className="group p-6 rounded-2xl border border-border bg-background/80 backdrop-blur-sm shadow-lg transition-all duration-300 hover:border-foreground hover:shadow-xl">
+                  className="group p-6 rounded-2xl border border-border bg-background/80 backdrop-blur-sm shadow-lg transition-all duration-300 hover:border-brand hover:shadow-xl">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-background shadow-sm transition-all duration-300 group-hover:border-brand group-hover:bg-brand group-hover:text-brand-foreground">
                       <Icon className="h-5 w-5" />
@@ -123,7 +123,7 @@ export default function PageClient() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={jobsIn ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
-                  className="rounded-2xl border border-border bg-background/80 backdrop-blur-sm shadow-lg p-8 transition-all duration-300 hover:border-foreground hover:shadow-xl">
+                  className="rounded-2xl border border-border bg-background/80 backdrop-blur-sm shadow-lg p-8 transition-all duration-300 hover:border-brand hover:shadow-xl">
                   <div className="flex flex-col sm:flex-row sm:items-start gap-4 mb-6">
                     <div className="flex-1">
                       <h3 className="text-xl font-bold text-foreground mb-2">{title}</h3>

@@ -144,7 +144,7 @@ export default function PageClient() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={vorteileIn ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: i * 0.07 }}
-                  className="group rounded-2xl border border-border bg-background/80 backdrop-blur-sm p-6 shadow-lg transition-all duration-300 hover:border-foreground hover:shadow-xl">
+                  className="group rounded-2xl border border-border bg-background/80 backdrop-blur-sm p-6 shadow-lg transition-all duration-300 hover:border-brand hover:shadow-xl">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-background shadow-sm transition-all duration-300 group-hover:border-brand group-hover:bg-brand group-hover:text-brand-foreground">
                       <Icon className="h-5 w-5" />
@@ -182,7 +182,7 @@ export default function PageClient() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={stepIn ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: i * 0.08 }}
-                  className="group flex flex-col rounded-2xl border border-border bg-background/80 backdrop-blur-sm p-6 shadow-lg transition-all duration-300 hover:border-foreground hover:shadow-xl">
+                  className="group flex flex-col rounded-2xl border border-border bg-background/80 backdrop-blur-sm p-6 shadow-lg transition-all duration-300 hover:border-brand hover:shadow-xl">
                   <span className="text-5xl font-bold text-foreground/10 group-hover:text-brand transition-colors duration-300 leading-none mb-4 font-mono">{step}</span>
                   <h3 className="text-base font-semibold text-foreground mb-2">{title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>

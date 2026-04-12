@@ -59,7 +59,7 @@ export default function PageClient() {
                   transition={{ duration: 0.5, delay: i * 0.07 }}
                 >
                   <Link href={href}
-                    className="group flex flex-col gap-4 p-6 rounded-2xl border border-border bg-background/80 backdrop-blur-sm shadow-lg transition-all duration-300 hover:border-foreground hover:shadow-xl h-full">
+                    className="group flex flex-col gap-4 p-6 rounded-2xl border border-border bg-background/80 backdrop-blur-sm shadow-lg transition-all duration-300 hover:border-brand hover:shadow-xl h-full">
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-bold px-2.5 py-1 rounded-full border border-border bg-muted text-muted-foreground">{tag}</span>
                       <span className="text-xs text-muted-foreground flex items-center gap-1.5">

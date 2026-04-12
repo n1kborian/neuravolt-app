@@ -62,7 +62,7 @@ export default function PageClient() {
               >
                 <ul className="space-y-3">
                   {benefits.map(({ icon: Icon, text }) => (
-                    <li key={text} className="group flex items-center gap-4 rounded-2xl border border-border bg-background/80 backdrop-blur-sm p-4 shadow-lg transition-all duration-300 hover:border-foreground hover:shadow-xl">
+                    <li key={text} className="group flex items-center gap-4 rounded-2xl border border-border bg-background/80 backdrop-blur-sm p-4 shadow-lg transition-all duration-300 hover:border-brand hover:shadow-xl">
                       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border bg-background shadow-sm transition-all duration-300 group-hover:border-brand group-hover:bg-brand group-hover:text-brand-foreground">
                         <Icon className="h-4 w-4" />
                       </div>
