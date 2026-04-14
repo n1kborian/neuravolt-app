@@ -1,0 +1,5 @@
+{
+  "extends": "@neuravolt/config/typescript/nextjs.json",
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

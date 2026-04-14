@@ -1,0 +1,28 @@
+{
+  "name": "@neuravolt/auth",
+  "version": "0.0.1",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/client.ts",
+    "./server": "./src/server.ts",
+    "./middleware": "./src/middleware.ts",
+    "./types": "./src/types.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.5.0",
+    "@supabase/supabase-js": "^2.47.0"
+  },
+  "peerDependencies": {
+    "next": "^15.0.0 || ^16.0.0"
+  },
+  "devDependencies": {
+    "@neuravolt/config": "workspace:*",
+    "@types/node": "^20",
+    "next": "^16.2.2",
+    "typescript": "^5"
+  }
+}
