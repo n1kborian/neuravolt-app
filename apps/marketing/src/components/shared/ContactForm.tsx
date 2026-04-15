@@ -16,6 +16,21 @@ const branchen = [
 
 const deviceRanges = ["1–10 Geräte", "11–50 Geräte", "51–200 Geräte", "200+ Geräte"];
 
+const TIMEFRAMES = [
+  "Innerhalb des nächsten Monats",
+  "Innerhalb der nächsten 3 Monate",
+  "Innerhalb der nächsten 6 Monate",
+  "Frei wählbarer Zeitraum",
+] as const;
+
+const CUSTOM_TIMEFRAME = "Frei wählbarer Zeitraum";
+
+function formatDateDe(iso: string): string {
+  if (!iso) return "";
+  const [y, m, d] = iso.split("-");
+  return `${d}.${m}.${y}`;
+}
+
 export function ContactForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -23,6 +38,9 @@ export function ContactForm() {
   const [company, setCompany] = useState("");
   const [branche, setBranche] = useState("");
   const [deviceCountRange, setDeviceCountRange] = useState("");
+  const [desiredTimeframe, setDesiredTimeframe] = useState("");
+  const [customStart, setCustomStart] = useState("");
+  const [customEnd, setCustomEnd] = useState("");
   const [message, setMessage] = useState("");
   const [consent, setConsent] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState("");
@@ -36,9 +54,18 @@ export function ContactForm() {
       setError("Bitte schließen Sie die Sicherheitsprüfung ab.");
       return;
     }
+    if (desiredTimeframe === CUSTOM_TIMEFRAME && (!customStart || !customEnd || customStart > customEnd)) {
+      setError("Bitte geben Sie einen gültigen Zeitraum an (Von-Datum vor Bis-Datum).");
+      return;
+    }
     setError(null);
     setLoading(true);
     try {
+      const timeframeValue =
+        desiredTimeframe === CUSTOM_TIMEFRAME
+          ? `Frei wählbar: ${formatDateDe(customStart)} – ${formatDateDe(customEnd)}`
+          : desiredTimeframe || undefined;
+
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -49,6 +76,7 @@ export function ContactForm() {
           company: company || undefined,
           branche: branche || undefined,
           deviceCountRange: deviceCountRange || undefined,
+          desiredTimeframe: timeframeValue,
           message: message || undefined,
           consentPrivacy: consent,
           turnstileToken,
@@ -155,6 +183,42 @@ export function ContactForm() {
           <option value="">Bitte wählen...</option>
           {deviceRanges.map(r => <option key={r} value={r}>{r}</option>)}
         </select>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-[#0a0a0a] mb-2">Gewünschter Zeitraum der Prüfung</label>
+        <select
+          value={desiredTimeframe}
+          onChange={e => setDesiredTimeframe(e.target.value)}
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 text-gray-600 focus:outline-none focus:border-foreground focus:ring-2 focus:ring-foreground/10 transition text-sm bg-white"
+        >
+          <option value="">Bitte wählen...</option>
+          {TIMEFRAMES.map(t => <option key={t} value={t}>{t}</option>)}
+        </select>
+        {desiredTimeframe === CUSTOM_TIMEFRAME && (
+          <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs font-medium text-[#0a0a0a] mb-1.5">Von</label>
+              <input
+                type="date"
+                value={customStart}
+                min={new Date().toISOString().slice(0, 10)}
+                onChange={e => setCustomStart(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 text-[#0a0a0a] focus:outline-none focus:border-foreground focus:ring-2 focus:ring-foreground/10 transition text-sm bg-white"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-[#0a0a0a] mb-1.5">Bis</label>
+              <input
+                type="date"
+                value={customEnd}
+                min={customStart || new Date().toISOString().slice(0, 10)}
+                onChange={e => setCustomEnd(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 text-[#0a0a0a] focus:outline-none focus:border-foreground focus:ring-2 focus:ring-foreground/10 transition text-sm bg-white"
+              />
+            </div>
+          </div>
+        )}
       </div>
 
       <div>

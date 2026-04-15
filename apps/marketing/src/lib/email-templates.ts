@@ -205,6 +205,7 @@ export function renderContactTeamEmail(input: {
   company?: string;
   branche?: string;
   deviceCountRange?: string;
+  desiredTimeframe?: string;
   message?: string;
 }): { subject: string; html: string } {
   const subject = `Neue Kontaktanfrage: ${input.company ?? input.firstName + " " + input.lastName}`;
@@ -217,6 +218,7 @@ export function renderContactTeamEmail(input: {
         ${input.company ? `<tr><td class="label">Unternehmen</td><td class="value">${escapeHtml(input.company)}</td></tr>` : ""}
         ${input.branche ? `<tr><td class="label">Branche</td><td class="value">${escapeHtml(input.branche)}</td></tr>` : ""}
         ${input.deviceCountRange ? `<tr><td class="label">Geräte</td><td class="value">${escapeHtml(input.deviceCountRange)}</td></tr>` : ""}
+        ${input.desiredTimeframe ? `<tr><td class="label">Wunsch-Zeitraum</td><td class="value">${escapeHtml(input.desiredTimeframe)}</td></tr>` : ""}
         ${input.message ? `<tr><td class="label">Nachricht</td><td class="value" style="white-space:pre-wrap;">${escapeHtml(input.message)}</td></tr>` : ""}
       </table>
     </div>

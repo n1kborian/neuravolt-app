@@ -25,11 +25,13 @@ const BRANCHEN = [
 ];
 
 const TIMEFRAMES = [
-  "Innerhalb 2 Wochen",
-  "Innerhalb 1 Monat",
-  "Innerhalb 3 Monate",
-  "Flexibel / unverbindlich",
-];
+  "Innerhalb des nächsten Monats",
+  "Innerhalb der nächsten 3 Monate",
+  "Innerhalb der nächsten 6 Monate",
+  "Frei wählbarer Zeitraum",
+] as const;
+
+const CUSTOM_TIMEFRAME = "Frei wählbarer Zeitraum";
 
 type Step = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 type SubmitState = "idle" | "loading" | "success" | "error";
@@ -39,6 +41,8 @@ interface WizardState {
   deviceCount: number;
   isFirstInspection: boolean | null;
   desiredTimeframe: string;
+  customStart: string;
+  customEnd: string;
   postalCode: string;
   city: string;
   company: string;
@@ -55,6 +59,8 @@ const INITIAL: WizardState = {
   deviceCount: 20,
   isFirstInspection: null,
   desiredTimeframe: "",
+  customStart: "",
+  customEnd: "",
   postalCode: "",
   city: "",
   company: "",
@@ -81,7 +87,13 @@ export function PriceCalculator() {
       case 0: return state.branche !== "";
       case 1: return state.deviceCount > 0;
       case 2: return state.isFirstInspection !== null;
-      case 3: return state.desiredTimeframe !== "";
+      case 3: {
+        if (state.desiredTimeframe === "") return false;
+        if (state.desiredTimeframe === CUSTOM_TIMEFRAME) {
+          return state.customStart !== "" && state.customEnd !== "" && state.customStart <= state.customEnd;
+        }
+        return true;
+      }
       case 4: return state.postalCode.length >= 4 && state.city.length >= 2;
       case 5: return (
         state.firstName.length > 0 &&
@@ -102,6 +114,11 @@ export function PriceCalculator() {
     setSubmit("loading");
     setErrorMsg(null);
     try {
+      const timeframeValue =
+        state.desiredTimeframe === CUSTOM_TIMEFRAME
+          ? `Frei wählbar: ${formatDateDe(state.customStart)} – ${formatDateDe(state.customEnd)}`
+          : state.desiredTimeframe;
+
       const res = await fetch("/api/quote", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -109,7 +126,7 @@ export function PriceCalculator() {
           branche: state.branche,
           deviceCount: state.deviceCount,
           isFirstInspection: state.isFirstInspection,
-          desiredTimeframe: state.desiredTimeframe,
+          desiredTimeframe: timeframeValue,
           postalCode: state.postalCode,
           city: state.city,
           company: state.company || undefined,
@@ -267,6 +284,30 @@ export function PriceCalculator() {
                       </OptionButton>
                     ))}
                   </div>
+                  {state.desiredTimeframe === CUSTOM_TIMEFRAME && (
+                    <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-semibold text-foreground mb-1.5">Von</label>
+                        <input
+                          type="date"
+                          value={state.customStart}
+                          min={new Date().toISOString().slice(0, 10)}
+                          onChange={e => update("customStart", e.target.value)}
+                          className="w-full px-3 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground focus:outline-none focus:border-foreground"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-foreground mb-1.5">Bis</label>
+                        <input
+                          type="date"
+                          value={state.customEnd}
+                          min={state.customStart || new Date().toISOString().slice(0, 10)}
+                          onChange={e => update("customEnd", e.target.value)}
+                          className="w-full px-3 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground focus:outline-none focus:border-foreground"
+                        />
+                      </div>
+                    </div>
+                  )}
                 </StepWrapper>
               )}
 
@@ -464,6 +505,12 @@ function OptionButton({
       {children}
     </button>
   );
+}
+
+function formatDateDe(iso: string): string {
+  if (!iso) return "";
+  const [y, m, d] = iso.split("-");
+  return `${d}.${m}.${y}`;
 }
 
 function TextField({
