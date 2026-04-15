@@ -62,11 +62,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "db_error" }, { status: 500 });
   }
 
+  let emailError: string | null = null;
   try {
     const resend = getResend();
     const teamMail = renderContactTeamEmail(data);
     const customerMail = renderContactCustomerEmail({ firstName: data.firstName });
-    await Promise.all([
+    const results = await Promise.all([
       resend.emails.send({
         from: fromField(),
         to: EMAIL_CONFIG.leadsTo,
@@ -82,9 +83,18 @@ export async function POST(request: Request) {
         html: customerMail.html,
       }),
     ]);
+    for (const r of results) {
+      if (r.error) {
+        console.error("[contact] resend error", r.error);
+        emailError = `${r.error.name ?? "resend_error"}: ${r.error.message ?? "unknown"}`;
+      } else {
+        console.log("[contact] resend ok", { id: r.data?.id });
+      }
+    }
   } catch (err) {
-    console.error("[contact] email send failed", err);
+    console.error("[contact] email send threw", err);
+    emailError = err instanceof Error ? err.message : String(err);
   }
 
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({ ok: true, emailError });
 }
