@@ -1,10 +1,12 @@
 "use client";
-import { useRef } from "react";
+import { Suspense, useRef } from "react";
 import { motion, useInView } from "motion/react";
+import { useSearchParams } from "next/navigation";
 import NavBar from "@/components/NavBar";
 import { Footer } from "@/components/essentials/Footer";
+import { NewsletterForm } from "@/components/forms/NewsletterForm";
 import Link from "next/link";
-import { ArrowRight, BookOpen, Clock } from "lucide-react";
+import { ArrowRight, BookOpen, Clock, CheckCircle2, AlertCircle } from "lucide-react";
 
 const artikel = [
   { tag: "Grundlagen", title: "Was ist die DGUV Vorschrift 3?",         desc: "Alles über die rechtliche Grundlage, wer betroffen ist und was die Prüfung beinhaltet.",                                                   href: "/dguv-v3",             readTime: "5 min" },
@@ -12,15 +14,60 @@ const artikel = [
   { tag: "Haftung",    title: "Haftungsrisiken bei Nichtprüfung",        desc: "Was passiert, wenn Sie die Prüfpflicht vernachlässigen? Bußgelder, Haftung und Versicherungsschutz.",                                      href: "/dguv-v3",             readTime: "6 min" },
   { tag: "Praxis",     title: "DGUV V3 Prüfung: Ablauf & Checkliste",   desc: "Schritt für Schritt: Was passiert bei einer Prüfung, wie bereiten Sie sich vor?",                                                           href: "/dguv-pruefung",       readTime: "7 min" },
   { tag: "Branchen",   title: "Besonderheiten in der Gastronomie",       desc: "Kürzere Intervalle, Feuchtraumanforderungen — was Gastronomen besonders beachten müssen.",                                                  href: "/branchen/gastronomie",readTime: "4 min" },
-  { tag: "Kosten",     title: "Was kostet eine DGUV V3 Prüfung?",        desc: "Wie KI-Bündelung die Kosten um bis zu 20 % senkt — Einzelprüfung vs. Wartungspaket und was enthalten ist.",                              href: "/angebote",            readTime: "3 min" },
+  { tag: "Kosten",     title: "Was kostet eine DGUV V3 Prüfung?",        desc: "Transparent aufgeschlüsselt: Preis pro Gerät, Anfahrtspauschale und Einrichtungspreis. Mit Preisrechner für Ihr individuelles Angebot.",    href: "/angebote",            readTime: "3 min" },
 ];
+
+function NewsletterStatusBanner() {
+  const params = useSearchParams();
+  const status = params.get("newsletter");
+  if (!status) return null;
+
+  const map = {
+    success: {
+      tone: "success" as const,
+      title: "Anmeldung bestätigt",
+      body: "Vielen Dank. Sie erhalten ab sofort unseren Ratgeber-Newsletter.",
+    },
+    expired: {
+      tone: "error" as const,
+      title: "Bestätigungslink abgelaufen",
+      body: "Der Link ist nicht mehr gültig. Bitte melden Sie sich unten erneut an.",
+    },
+    invalid: {
+      tone: "error" as const,
+      title: "Ungültiger Bestätigungslink",
+      body: "Der Link konnte nicht zugeordnet werden. Bitte melden Sie sich unten erneut an.",
+    },
+  } as const;
+
+  const conf = map[status as keyof typeof map];
+  if (!conf) return null;
+
+  const isSuccess = conf.tone === "success";
+
+  return (
+    <div className={`rounded-2xl border p-5 flex items-start gap-3 mb-8 ${
+      isSuccess
+        ? "border-green-200 bg-green-50 text-green-900"
+        : "border-red-200 bg-red-50 text-red-900"
+    }`}>
+      {isSuccess ? <CheckCircle2 className="h-5 w-5 shrink-0 mt-0.5 text-green-600" /> : <AlertCircle className="h-5 w-5 shrink-0 mt-0.5 text-red-600" />}
+      <div>
+        <p className="font-bold text-sm">{conf.title}</p>
+        <p className="text-sm opacity-80">{conf.body}</p>
+      </div>
+    </div>
+  );
+}
 
 export default function PageClient() {
   const heroRef  = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
+  const newsRef  = useRef<HTMLDivElement>(null);
 
   const heroIn  = useInView(heroRef,  { once: true, amount: 0.15 });
   const cardsIn = useInView(cardsRef, { once: true, amount: 0.1  });
+  const newsIn  = useInView(newsRef,  { once: true, amount: 0.2  });
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-b from-background to-muted/30">
@@ -35,6 +82,7 @@ export default function PageClient() {
               transition={{ duration: 0.6 }}
               className="max-w-3xl"
             >
+              <Suspense fallback={null}><NewsletterStatusBanner /></Suspense>
               <div className="flex items-center gap-3 mb-4">
                 <div className="h-[2px] w-8 bg-foreground" />
                 <span className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground">Ratgeber</span>
@@ -80,6 +128,38 @@ export default function PageClient() {
                 </motion.div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* ── Newsletter ────────────────────────────────────────────────────── */}
+        <section ref={newsRef} className="w-full pb-16 md:pb-24">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={newsIn ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-8 max-w-2xl mx-auto"
+            >
+              <div className="flex items-center gap-3 mb-4 justify-center">
+                <div className="h-[2px] w-8 bg-foreground" />
+                <span className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground">Bleiben Sie informiert</span>
+                <div className="h-[2px] w-8 bg-foreground" />
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground leading-tight mb-3">
+                Jeden Monat neue Praxis-Tipps
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                Kurz, konkret, direkt aus der Praxis — ohne Werbe­ballast. Kostenlos, jederzeit abbestellbar.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={newsIn ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <NewsletterForm />
+            </motion.div>
           </div>
         </section>
 

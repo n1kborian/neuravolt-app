@@ -36,7 +36,7 @@ const faqs: FAQItem[] = [
     icon: Banknote,
     value: "item-3",
     q: "Was kostet eine DGUV V3 Prüfung bei NeuraVolt?",
-    a: "Unsere Einmalprüfung beginnt ab 4,90 € pro Gerät (zzgl. MwSt.). Für regelmäßige Prüfungen bieten wir Wartungspakete ab 3,90 € pro Gerät/Monat an. Ein konkretes Angebot erhalten Sie nach Ihrer Anfrage innerhalb von 24 Stunden.",
+    a: "Ab 4,90 € pro Gerät (zzgl. MwSt.), gestaffelt nach Menge. Hinzu kommen eine einmalige Anfahrtspauschale (49 €) und bei der Erstprüfung ein einmaliger Einrichtungspreis (89 €) — dieser entfällt bei jeder Folgeprüfung. Mit unserem Preisrechner erhalten Sie in unter einer Minute ein transparentes Angebot per E-Mail.",
   },
   {
     icon: TrendingDown,

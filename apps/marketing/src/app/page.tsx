@@ -5,6 +5,7 @@ import { FuerWenSection } from "@/components/home/FuerWenSection";
 import { ClusterSection } from "@/components/home/ClusterSection";
 import { AiSection } from "@/components/home/AiSection";
 import { FAQSection } from "@/components/home/FAQSection";
+import { FristencheckSection } from "@/components/home/FristencheckSection";
 import { CTASection } from "@/components/home/CTASection";
 import { Footer } from "@/components/essentials/Footer";
 
@@ -24,6 +25,7 @@ export default function HomePage() {
         <FuerWenSection />
         <ClusterSection />
         <AiSection />
+        <FristencheckSection />
         <FAQSection />
         <CTASection />
       </main>
