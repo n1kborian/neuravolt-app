@@ -154,9 +154,6 @@ importers:
       '@neuravolt/auth':
         specifier: workspace:*
         version: link:../../packages/auth
-      '@neuravolt/database':
-        specifier: workspace:*
-        version: link:../../packages/database
       '@neuravolt/ui':
         specifier: workspace:*
         version: link:../../packages/ui
