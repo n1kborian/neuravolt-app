@@ -93,7 +93,7 @@ export default function PageClient() {
                     </div>
                     <p className="font-bold text-foreground text-sm">{label}</p>
                   </div>
-                  <p className="text-xs text-muted-foreground">{desc}</p>
+                  <p className="text-xs text-muted-foreground text-justify hyphens-auto">{desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -133,7 +133,7 @@ export default function PageClient() {
                           <MapPin className="h-3 w-3" />{location}
                         </span>
                       </div>
-                      <p className="text-muted-foreground text-sm leading-relaxed">{desc}</p>
+                      <p className="text-muted-foreground text-sm leading-relaxed text-justify hyphens-auto">{desc}</p>
                     </div>
                     <Link href="/contact"
                       className="group/btn shrink-0 inline-flex items-center gap-2 rounded-full border border-foreground bg-foreground px-5 py-2.5 text-sm font-semibold text-background transition-all duration-300 hover:bg-foreground/90">

@@ -3,6 +3,8 @@ import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { motion } from "motion/react";
+import { LogIn } from "lucide-react";
+import { LoginModal } from "./LoginModal";
 
 type NavLink = {
   href: string;
@@ -42,6 +44,7 @@ export default function NavBar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const dropdownRef = useRef<HTMLLIElement | null>(null);
@@ -103,6 +106,13 @@ export default function NavBar() {
             )
           )}
           <div className="pt-3 flex flex-col gap-2 border-t border-border mt-1">
+            <button
+              type="button"
+              onClick={() => { setOpen(false); setLoginOpen(true); }}
+              className="block w-full text-center py-3 px-4 rounded-full border border-border text-foreground font-semibold hover:bg-muted transition text-sm"
+            >
+              Login
+            </button>
             <Link href="/dguv-check" onClick={() => setOpen(false)}
               className="block w-full text-center py-3 px-4 rounded-full border border-border text-foreground font-semibold hover:bg-muted transition text-sm">
               DGUV-Check starten
@@ -168,6 +178,14 @@ export default function NavBar() {
 
         {/* Desktop CTAs */}
         <div className="hidden md:flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setLoginOpen(true)}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-border text-foreground font-semibold hover:bg-muted transition-colors text-sm"
+          >
+            <LogIn className="h-4 w-4" />
+            Login
+          </button>
           <Link
             href="/dguv-check"
             className="px-4 py-2 rounded-full border border-border text-foreground font-semibold hover:bg-muted transition-colors text-sm"
@@ -229,6 +247,8 @@ export default function NavBar() {
       }
 
       {mounted && typeof document !== "undefined" && createPortal(overlay, document.body)}
+
+      <LoginModal open={loginOpen} onOpenChange={setLoginOpen} />
     </>
   );
 }

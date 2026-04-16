@@ -233,7 +233,7 @@ export default function PageClient() {
                         {intervall}
                       </span>
                     </div>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{desc}</p>
+                    <p className="text-muted-foreground text-sm leading-relaxed text-justify hyphens-auto">{desc}</p>
                     <div className="flex flex-wrap gap-1.5">
                       {geraete.map(g => (
                         <span key={g} className="text-xs px-2.5 py-1 rounded-full border border-border bg-muted text-muted-foreground">
@@ -352,7 +352,7 @@ export default function PageClient() {
                     <Icon className="h-5 w-5" />
                   </div>
                   <h3 className="font-bold text-foreground text-lg mb-2">{title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{body}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed text-justify hyphens-auto">{body}</p>
                 </motion.div>
               ))}
             </div>

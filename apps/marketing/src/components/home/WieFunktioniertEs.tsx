@@ -75,7 +75,7 @@ function ProcessCard({ step, index, isInView }: ProcessCardProps) {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.5, delay: index * 0.15 + 0.35 }}
-          className="text-sm leading-relaxed text-muted-foreground"
+          className="text-sm leading-relaxed text-muted-foreground text-justify hyphens-auto"
         >
           {step.description}
         </motion.p>

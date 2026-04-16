@@ -88,7 +88,7 @@ export default function PageClient() {
                 >
                   <p className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground mb-2">{item.label}</p>
                   <p className="text-3xl font-bold text-foreground mb-1">{item.value}</p>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{item.sub}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed text-justify hyphens-auto">{item.sub}</p>
                 </motion.div>
               ))}
             </div>
@@ -143,7 +143,7 @@ export default function PageClient() {
                     <Icon className="h-4 w-4 text-foreground" />
                   </div>
                   <p className="font-bold text-foreground text-sm mb-1">{title}</p>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{desc}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed text-justify hyphens-auto">{desc}</p>
                 </motion.div>
               ))}
             </div>

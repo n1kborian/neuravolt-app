@@ -135,7 +135,7 @@ export default function PageClient() {
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-foreground mb-0.5">{title}</p>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{desc}</p>
+                      <p className="text-xs text-muted-foreground leading-relaxed text-justify hyphens-auto">{desc}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -178,7 +178,7 @@ export default function PageClient() {
                     </div>
                     <h3 className="font-bold text-foreground">{title}</h3>
                   </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed text-justify hyphens-auto">{desc}</p>
                 </motion.div>
               ))}
             </div>

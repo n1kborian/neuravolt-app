@@ -3,6 +3,7 @@
 import { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X, ArrowLeftRight } from "lucide-react";
+import Link from "next/link";
 import { getSupabaseBrowserClient } from "@neuravolt/auth/client";
 
 type Portal = "customer" | "company";
@@ -53,6 +54,7 @@ export function LoginModal({
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [forgotSent, setForgotSent] = useState(false);
 
   const config = PORTAL_CONFIG[portal];
 
@@ -182,6 +184,12 @@ export function LoginModal({
               </div>
             )}
 
+            {forgotSent && (
+              <div className="rounded-xl bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700">
+                Ein Link zum Zurücksetzen wurde an <strong>{email}</strong> gesendet. Bitte prüfen Sie Ihren Posteingang und Spam-Ordner.
+              </div>
+            )}
+
             <button
               type="submit"
               disabled={loading}
@@ -189,6 +197,39 @@ export function LoginModal({
             >
               {loading ? "Wird angemeldet …" : "Anmelden"}
             </button>
+
+            <div className="flex items-center justify-between text-xs text-muted-foreground">
+              <button
+                type="button"
+                onClick={async () => {
+                  if (!email) {
+                    setError("Bitte geben Sie zuerst Ihre E-Mail-Adresse ein.");
+                    return;
+                  }
+                  setError(null);
+                  setLoading(true);
+                  const supabase = getSupabaseBrowserClient();
+                  const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+                    redirectTo: `${window.location.origin}/auth/callback`,
+                  });
+                  setLoading(false);
+                  if (resetError) {
+                    setError("Link konnte nicht gesendet werden. Bitte versuchen Sie es erneut.");
+                  } else {
+                    setError(null);
+                    setForgotSent(true);
+                  }
+                }}
+                className="hover:text-foreground underline transition"
+              >
+                Passwort vergessen?
+              </button>
+              <Dialog.Close asChild>
+                <Link href="/register" className="hover:text-foreground underline transition">
+                  Konto erstellen
+                </Link>
+              </Dialog.Close>
+            </div>
           </form>
         </Dialog.Content>
       </Dialog.Portal>

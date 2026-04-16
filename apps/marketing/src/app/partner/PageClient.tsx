@@ -151,7 +151,7 @@ export default function PageClient() {
                     </div>
                     <h3 className="font-bold text-foreground">{title}</h3>
                   </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed text-justify hyphens-auto">{desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -185,7 +185,7 @@ export default function PageClient() {
                   className="group flex flex-col rounded-2xl border border-border bg-background/80 backdrop-blur-sm p-6 shadow-lg transition-all duration-300 hover:border-brand hover:shadow-xl">
                   <span className="text-5xl font-bold text-foreground/10 group-hover:text-brand transition-colors duration-300 leading-none mb-4 font-mono">{step}</span>
                   <h3 className="text-base font-semibold text-foreground mb-2">{title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed text-justify hyphens-auto">{desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -208,7 +208,7 @@ export default function PageClient() {
                     <span className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground">Für wen</span>
                   </div>
                   <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">Für wen ist die Partnerschaft?</h2>
-                  <p className="text-muted-foreground leading-relaxed mb-6">
+                  <p className="text-muted-foreground leading-relaxed mb-6 text-justify hyphens-auto">
                     Unser Partnerprogramm richtet sich an alle, die DGUV V3 Prüfungen durchführen dürfen und ihr Auftragsvolumen flexibel erweitern möchten — ohne den Aufwand eines eigenen Vertriebs oder Backoffice.
                   </p>
                   <ul className="space-y-3">

@@ -1,9 +1,9 @@
 import PageClient from "./PageClient";
 
 export const metadata = {
-  title: "Warteliste – NeuraVolt digitales Kundenportal",
+  title: "Registrierung – NeuraVolt Kunden- oder Unternehmensportal",
   description:
-    "Tragen Sie sich auf die Warteliste für das NeuraVolt Kundenportal ein. Digitale Prüfverwaltung, Protokolle und Fristenmanagement auf Knopfdruck.",
+    "Erstellen Sie ein NeuraVolt-Konto — als Kunde für Prüfverwaltung und digitale Protokolle oder als Unternehmen/Prüfpartner.",
 };
 
 export default function Page() {

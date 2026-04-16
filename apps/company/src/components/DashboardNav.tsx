@@ -2,15 +2,14 @@
 
 import { useRouter } from "next/navigation";
 import { getSupabaseBrowserClient } from "@neuravolt/auth/client";
-import { LayoutDashboard, FileText, Users, Cpu, Settings, LogOut } from "lucide-react";
+import { LayoutDashboard, FileText, Receipt, Settings, LogOut } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Übersicht", icon: LayoutDashboard },
   { href: "/dashboard/auftraege", label: "Aufträge", icon: FileText },
-  { href: "/dashboard/kunden", label: "Kunden", icon: Users },
-  { href: "/dashboard/geraete", label: "Geräte", icon: Cpu },
+  { href: "/dashboard/abrechnung", label: "Abrechnung", icon: Receipt },
   { href: "/dashboard/settings", label: "Einstellungen", icon: Settings },
 ];
 

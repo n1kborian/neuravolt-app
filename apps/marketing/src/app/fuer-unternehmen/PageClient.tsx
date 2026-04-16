@@ -130,7 +130,7 @@ export default function PageClient() {
                     </div>
                     <h3 className="font-bold text-foreground">{title}</h3>
                   </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed text-justify hyphens-auto">{desc}</p>
                 </motion.div>
               ))}
             </div>

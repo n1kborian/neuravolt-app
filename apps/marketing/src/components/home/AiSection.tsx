@@ -64,13 +64,13 @@ export function AiSection() {
               <h3 className="text-xl font-bold text-foreground mb-5">
                 Alle Aufträge. Eine Plattform. Ihr Vorteil.
               </h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-muted-foreground leading-relaxed mb-4 text-justify hyphens-auto">
                 Bei NeuraVolt profitieren Sie davon, dass wir sämtliche Aufträge auf unserer Plattform gemeinsam analysieren. Regionale Aufträge werden dabei nicht isoliert betrachtet — unsere KI erkennt, welche Betriebe in Ihrer Nähe denselben Prüfzeitraum haben, und bündelt diese zu einem gemeinsamen Einsatz.
               </p>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="text-muted-foreground leading-relaxed mb-4 text-justify hyphens-auto">
                 Durch zeitliche und lokale Zusammenlegung nahegelegener Aufträge senken wir Anfahrts- und Planungskosten spürbar — und geben die Ersparnis direkt an Sie weiter. Kein Aufwand Ihrerseits: Unsere KI meldet sich proaktiv, wenn sich Ihr Prüftermin kostengünstiger gestalten lässt.
               </p>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed text-justify hyphens-auto">
                 Unser Ziel: den gesamten bürokratischen Aufwand rund um die DGUV V3 Prüfung vollständig eliminieren — von automatischer Terminplanung und Fristenverwaltung bis zur direkten Weitergabe jedes Preisvorteils.
               </p>
             </motion.div>
@@ -92,7 +92,7 @@ export function AiSection() {
                   </div>
                   <p className="text-sm font-semibold text-foreground leading-tight">{f.title}</p>
                 </div>
-                <p className="text-xs text-muted-foreground leading-relaxed">{f.desc}</p>
+                <p className="text-xs text-muted-foreground leading-relaxed text-justify hyphens-auto">{f.desc}</p>
               </motion.div>
             ))}
           </div>

@@ -74,7 +74,7 @@ export function BranchenPageTemplate({
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight mb-5">
                   {title}<br />{highlight}
                 </h1>
-                <p className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-xl">{subtitle}</p>
+                <p className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-xl text-justify hyphens-auto">{subtitle}</p>
                 <div className="flex flex-wrap gap-3">
                   <Link
                     href="/contact"
@@ -155,7 +155,7 @@ export function BranchenPageTemplate({
               <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
                 DGUV V3 Prüfung in Ihrer Branche
               </h2>
-              <p className="text-muted-foreground text-lg leading-relaxed max-w-3xl">{intro}</p>
+              <p className="text-muted-foreground text-lg leading-relaxed max-w-3xl text-justify hyphens-auto">{intro}</p>
             </motion.div>
           </div>
         </section>

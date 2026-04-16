@@ -83,7 +83,7 @@ export default function HeroSection() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={isLoaded ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
-                className="mt-6 text-lg text-muted-foreground max-w-lg"
+                className="mt-6 text-lg text-muted-foreground max-w-2xl text-justify hyphens-auto"
               >
                 NeuraVolt ist die digitale Plattform für DGUV V3 Betriebsmittelprüfungen — mit einem Netzwerk zertifizierter Partner, KI-optimierter Terminplanung und automatischem Fristenmanagement. Bis zu 20 % günstiger als klassische Anbieter.
               </motion.p>

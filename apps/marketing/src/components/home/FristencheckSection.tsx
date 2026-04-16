@@ -49,7 +49,7 @@ export function FristencheckSection() {
                   </div>
                   <div>
                     <p className="font-bold text-foreground text-sm">{title}</p>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{body}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed text-justify hyphens-auto">{body}</p>
                   </div>
                 </motion.li>
               ))}
