@@ -17,7 +17,7 @@ export const metadata = {
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-b from-background to-muted/30">
+    <div className="min-h-screen w-full overflow-x-hidden">
       <NavBar />
       <main>
         <HeroSection />

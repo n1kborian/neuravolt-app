@@ -78,3 +78,68 @@
     scroll-behavior: smooth;
   }
 }
+
+/* Animated ambient background — subtle drifting color blobs */
+@keyframes blob-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(80px, -60px) scale(1.1); }
+  50% { transform: translate(-40px, 40px) scale(0.95); }
+  75% { transform: translate(60px, 80px) scale(1.05); }
+}
+@keyframes blob-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-60px, 80px) scale(1.08); }
+  50% { transform: translate(50px, -30px) scale(0.92); }
+  75% { transform: translate(-80px, -50px) scale(1.12); }
+}
+@keyframes blob-drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(70px, 50px) scale(1.06); }
+  66% { transform: translate(-50px, -70px) scale(0.97); }
+}
+
+.animated-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.animated-bg::before,
+.animated-bg::after,
+.animated-bg .blob-3 {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.12;
+  will-change: transform;
+}
+
+.animated-bg::before {
+  width: 600px;
+  height: 600px;
+  top: -10%;
+  left: -5%;
+  background: oklch(0.65 0.18 240);
+  animation: blob-drift-1 25s ease-in-out infinite;
+}
+
+.animated-bg::after {
+  width: 500px;
+  height: 500px;
+  top: 40%;
+  right: -8%;
+  background: oklch(0.70 0.15 200);
+  animation: blob-drift-2 30s ease-in-out infinite;
+}
+
+.animated-bg .blob-3 {
+  width: 450px;
+  height: 450px;
+  bottom: 5%;
+  left: 30%;
+  background: oklch(0.60 0.12 280);
+  animation: blob-drift-3 35s ease-in-out infinite;
+}
