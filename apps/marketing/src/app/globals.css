@@ -38,29 +38,36 @@
 }
 
 :root {
-  /* ── Brand accent colour — change only this line to retheme the site ── */
-  --brand: oklch(0.546 0.245 263);      /* blue (≈ Tailwind blue-600) */
-  --brand-foreground: oklch(1 0 0);     /* white text on brand */
+  /* ── Neon accent — electric cyan ── */
+  --brand: oklch(0.75 0.18 195);          /* neon cyan */
+  --brand-foreground: oklch(0.09 0 0);    /* dark text on brand */
 
-  /* Pure black & white palette */
-  --background: oklch(1 0 0);           /* white */
-  --foreground: oklch(0.09 0 0);        /* near-black */
+  /* Neon glow values for hover/shadow effects */
+  --neon-cyan: oklch(0.80 0.20 195);
+  --neon-blue: oklch(0.65 0.22 260);
+  --neon-violet: oklch(0.60 0.22 300);
+  --neon-glow: 0 0 20px oklch(0.75 0.18 195 / 0.3);
+  --neon-glow-strong: 0 0 30px oklch(0.75 0.18 195 / 0.4), 0 0 60px oklch(0.75 0.18 195 / 0.15);
+
+  /* Near-white palette with subtle warmth */
+  --background: oklch(0.995 0.002 260);   /* barely-tinted white */
+  --foreground: oklch(0.09 0 0);          /* near-black */
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.09 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.09 0 0);
-  --primary: oklch(0.09 0 0);           /* black */
-  --primary-foreground: oklch(1 0 0);   /* white */
-  --secondary: oklch(0.96 0 0);         /* light gray */
+  --primary: oklch(0.09 0 0);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.96 0.005 260);
   --secondary-foreground: oklch(0.09 0 0);
-  --muted: oklch(0.96 0 0);
+  --muted: oklch(0.96 0.005 260);
   --muted-foreground: oklch(0.46 0 0);
-  --accent: oklch(0.93 0 0);
+  --accent: oklch(0.93 0.008 260);
   --accent-foreground: oklch(0.09 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.90 0 0);
-  --input: oklch(0.90 0 0);
-  --ring: oklch(0.09 0 0);
+  --border: oklch(0.90 0.005 260);
+  --input: oklch(0.90 0.005 260);
+  --ring: var(--brand);
   --radius: 0.625rem;
 }
 
@@ -79,67 +86,38 @@
   }
 }
 
-/* Animated ambient background — subtle drifting color blobs */
-@keyframes blob-drift-1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(80px, -60px) scale(1.1); }
-  50% { transform: translate(-40px, 40px) scale(0.95); }
-  75% { transform: translate(60px, 80px) scale(1.05); }
+/* ── Neon accent system ── */
+
+/* Cards get neon cyan border + glow on hover */
+.rounded-2xl[class*="border"][class*="shadow"] {
+  transition: box-shadow 0.35s ease, border-color 0.35s ease;
 }
-@keyframes blob-drift-2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(-60px, 80px) scale(1.08); }
-  50% { transform: translate(50px, -30px) scale(0.92); }
-  75% { transform: translate(-80px, -50px) scale(1.12); }
-}
-@keyframes blob-drift-3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(70px, 50px) scale(1.06); }
-  66% { transform: translate(-50px, -70px) scale(0.97); }
+.rounded-2xl[class*="border"][class*="shadow"]:hover {
+  border-color: var(--neon-cyan) !important;
+  box-shadow: var(--neon-glow), 0 4px 24px oklch(0 0 0 / 0.06);
 }
 
-.animated-bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
+/* Primary CTA buttons (bg-foreground) get neon glow on hover */
+.bg-foreground:hover {
+  box-shadow: var(--neon-glow);
 }
 
-.animated-bg::before,
-.animated-bg::after,
-.animated-bg .blob-3 {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.12;
-  will-change: transform;
+/* Brand-colored elements get stronger glow */
+.bg-brand:hover,
+.border-brand {
+  box-shadow: var(--neon-glow);
 }
 
-.animated-bg::before {
-  width: 600px;
-  height: 600px;
-  top: -10%;
-  left: -5%;
-  background: oklch(0.65 0.18 240);
-  animation: blob-drift-1 25s ease-in-out infinite;
+/* Focus rings use neon accent */
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  box-shadow: var(--neon-glow);
 }
 
-.animated-bg::after {
-  width: 500px;
-  height: 500px;
-  top: 40%;
-  right: -8%;
-  background: oklch(0.70 0.15 200);
-  animation: blob-drift-2 30s ease-in-out infinite;
+/* Neon underline accent for active nav links and brand text */
+.text-brand {
+  text-shadow: 0 0 20px oklch(0.75 0.18 195 / 0.25);
 }
 
-.animated-bg .blob-3 {
-  width: 450px;
-  height: 450px;
-  bottom: 5%;
-  left: 30%;
-  background: oklch(0.60 0.12 280);
-  animation: blob-drift-3 35s ease-in-out infinite;
-}
+

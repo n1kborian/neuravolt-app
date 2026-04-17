@@ -32,10 +32,7 @@ export default function RootLayout({
   return (
     <html lang="de" className={`${geist.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-white text-[#0a0a0a]">
-        <div className="animated-bg" aria-hidden="true"><div className="blob-3" /></div>
-        <div className="relative z-10 flex flex-col min-h-full">
-          {children}
-        </div>
+        {children}
         <SpeedInsights />
       </body>
     </html>
