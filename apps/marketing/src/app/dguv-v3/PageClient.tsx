@@ -119,7 +119,7 @@ export default function PageClient() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={legalIn ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.15 }}
-                className="grid grid-cols-2 gap-3"
+                className="grid grid-cols-1 sm:grid-cols-2 gap-3"
               >
                 {legalBasis.map(({ title, desc }, i) => (
                   <motion.div key={title}

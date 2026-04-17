@@ -80,7 +80,7 @@ export default function PageClient() {
 
         <section ref={benefitRef} className="w-full pb-16 md:pb-20">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {benefits.map(({ icon: Icon, label, desc }, i) => (
                 <motion.div key={label}
                   initial={{ opacity: 0, y: 20 }}

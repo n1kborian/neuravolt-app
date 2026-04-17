@@ -80,7 +80,7 @@ export default function PageClient() {
                 initial={{ opacity: 0, y: 24 }}
                 animate={heroIn ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.15 }}
-                className="grid grid-cols-2 gap-3"
+                className="grid grid-cols-1 sm:grid-cols-2 gap-3"
               >
                 {stats.map(({ value, label }, i) => (
                   <motion.div key={label}
