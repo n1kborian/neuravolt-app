@@ -60,7 +60,7 @@ export function FuerWenSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.15 }}
-          className="relative grid grid-cols-2 border border-border sm:grid-cols-3"
+          className="relative grid grid-cols-1 border border-border sm:grid-cols-2 lg:grid-cols-3"
         >
 
           {branchen.map((b, i) => {
