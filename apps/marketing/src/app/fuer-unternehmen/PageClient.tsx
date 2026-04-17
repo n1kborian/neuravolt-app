@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const benefits = [
   { icon: Clock,           title: "Zeit sparen",               desc: "Kein Koordinationsaufwand, keine Fristenverfolgung, keine Protokollpflege. Wir übernehmen alles." },
-  { icon: TrendingDown,    title: "Kosten reduzieren",         desc: "Bis zu 20 % unter Marktpreis — durch KI-gestützte Auftragsbündelung und unser Netzwerk zertifizierter Partner. Ab 4,90 € pro Gerät." },
+  { icon: TrendingDown,    title: "Kosten reduzieren",         desc: "Bis zu 20 % Kostenersparnis durch KI-gestützte Auftragsbündelung und unser Netzwerk zertifizierter Partner. Ab 4,90 € pro Gerät." },
   { icon: Shield,          title: "Haftungsrisiko eliminieren", desc: "100% compliant, rechtssicher dokumentiert, versicherungskonform. Sie sind auf der sicheren Seite." },
   { icon: BarChart3,       title: "Volle Transparenz",         desc: "Digitales Dashboard mit allen Prüfdaten, Fristen und Protokollen — jederzeit abrufbar." },
   { icon: HeadphonesIcon,  title: "Fester Ansprechpartner",    desc: "Im Wartungspaket erhalten Sie einen persönlichen Ansprechpartner bei NeuraVolt." },

@@ -75,7 +75,7 @@ const trustPoints = [
   { icon: ShieldCheck, label: "Rechtssicher nach DGUV V3", sub: "Zertifizierte Elektrofachkräfte — konform zu VDE 0701/0702." },
   { icon: Clock, label: "Fristenmanagement inklusive", sub: "Automatische Erinnerungen vor jedem Prüfzyklus." },
   { icon: FileText, label: "Digitale Protokolle", sub: "Revisionssicher, sofort abrufbar, BG-konform." },
-  { icon: Sparkles, label: "Ab 4,90 € pro Gerät", sub: "Bis zu 20 % unter Marktpreis durch Auftragsbündelung." },
+  { icon: Sparkles, label: "Ab 4,90 € pro Gerät", sub: "Bis zu 20 % Kostenersparnis durch Auftragsbündelung." },
 ];
 
 const process = [

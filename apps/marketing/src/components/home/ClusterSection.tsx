@@ -59,7 +59,7 @@ const steps = [
     icon: TrendingDown,
     value: "step-6",
     title: "Ersparnis weitergeben",
-    body: "Die eingesparten Anfahrts- und Planungskosten geben wir direkt an Sie weiter. Durch Clusterung zahlen Sie bis zu 20 % weniger — ohne Abstriche bei Qualität oder Rechtssicherheit.",
+    body: "Die eingesparten Anfahrts- und Planungskosten geben wir direkt an Sie weiter. Durch Clusterung sind Kostenersparnisse von bis zu 20 % möglich — ohne Abstriche bei Qualität oder Rechtssicherheit.",
   },
 ];
 

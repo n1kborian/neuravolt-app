@@ -41,8 +41,8 @@ const faqs: FAQItem[] = [
   {
     icon: TrendingDown,
     value: "item-7",
-    q: "Warum ist NeuraVolt günstiger als andere Anbieter?",
-    a: "NeuraVolt ist eine digitale Plattform, die über ein Netzwerk zertifizierter Elektrofachkraft-Partner arbeitet. Unsere KI bündelt Aufträge regional und zeitlich — die Partner können effizienter arbeiten, und wir geben diese Einsparungen direkt an Sie weiter. Das Ergebnis: Preise bis zu 20 % unter dem Marktüblichen, bei gleichem Qualitäts- und Rechtssicherheitsstandard.",
+    q: "Wie erzielt NeuraVolt die Kostenersparnis?",
+    a: "NeuraVolt ist eine digitale Plattform, die über ein Netzwerk zertifizierter Elektrofachkraft-Partner arbeitet. Unsere KI bündelt Aufträge regional und zeitlich — die Partner können effizienter arbeiten, und wir geben diese Einsparungen direkt an Sie weiter. Das Ergebnis: bis zu 20 % Kostenersparnis bei gleichem Qualitäts- und Rechtssicherheitsstandard.",
   },
   {
     icon: Building2,

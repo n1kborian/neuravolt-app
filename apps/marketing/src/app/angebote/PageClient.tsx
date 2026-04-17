@@ -11,7 +11,7 @@ const features = [
   { icon: Shield, title: "Rechtssicher nach DGUV V3", desc: "Zertifizierte Elektrofachkräfte, konform zu VDE 0701/0702." },
   { icon: FileText, title: "Digitale Protokolle", desc: "Revisionssicher, sofort abrufbar, BG-konform." },
   { icon: Zap, title: "Fristen automatisch", desc: "Keine Frist mehr verpassen — wir erinnern rechtzeitig." },
-  { icon: TrendingDown, title: "Bis zu 20 % günstiger", desc: "Durch KI-gestützte Auftragsbündelung in der Region." },
+  { icon: TrendingDown, title: "Bis zu 20 % Kostenersparnis", desc: "Durch KI-gestützte Auftragsbündelung in der Region." },
 ];
 
 const priceBreakdown = [

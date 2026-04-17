@@ -11,7 +11,7 @@ const stats = [
   { num: "4,90 €", label: "Pro Gerät",        sub: "zzgl. MwSt. · kein Vertrag nötig" },
   { num: "24h",    label: "Rückmeldung",      sub: "Angebot innerhalb eines Werktages" },
   { num: "100%",   label: "Rechtssicher",     sub: "Zertifizierte Elektrofachkräfte" },
-  { num: "−20 %",  label: "unter Marktpreis", sub: "Durch KI-gestützte Auftragsbündelung" },
+  { num: "−20 %",  label: "Kostenersparnis", sub: "Durch KI-gestützte Auftragsbündelung" },
 ];
 
 export default function HeroSection() {
@@ -20,7 +20,7 @@ export default function HeroSection() {
   const features = [
     "Zugang zum NeuraVolt-Partnernetzwerk zertifizierter Elektrofachkräfte",
     "Prüfung durch zertifizierte Elektrofachkräfte — ohne Betriebsunterbrechung",
-    "Bis zu 20 % günstiger durch KI-gestützte Auftragsbündelung",
+    "Bis zu 20 % Kostenersparnis durch KI-gestützte Auftragsbündelung",
     "Automatisches Fristenmanagement inklusive",
   ];
 
@@ -85,7 +85,7 @@ export default function HeroSection() {
                 transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
                 className="mt-6 text-lg text-muted-foreground max-w-2xl text-justify hyphens-auto"
               >
-                NeuraVolt ist die digitale Plattform für DGUV V3 Betriebsmittelprüfungen — mit einem Netzwerk zertifizierter Partner, KI-optimierter Terminplanung und automatischem Fristenmanagement. Bis zu 20 % günstiger als klassische Anbieter.
+                NeuraVolt ist die digitale Plattform für DGUV V3 Betriebsmittelprüfungen — mit einem Netzwerk zertifizierter Partner, KI-optimierter Terminplanung und automatischem Fristenmanagement. Bis zu 20 % Kostenersparnis durch intelligente Auftragsbündelung.
               </motion.p>
             </div>
 

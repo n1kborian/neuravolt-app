@@ -10,7 +10,7 @@ const stats = [
   { value: "4,90 €",  label: "ab / Gerät" },
   { value: "24h",     label: "Antwortzeit" },
   { value: "100 %",   label: "DGUV-konform" },
-  { value: "−20 %",   label: "günstiger" },
+  { value: "−20 %",   label: "Kostenersparnis" },
 ];
 
 const leistungen = [
@@ -18,7 +18,7 @@ const leistungen = [
   { icon: Shield,       title: "Prüfung durch Fachkräfte", desc: "Zertifizierte Partnerfachkräfte aus unserem Netzwerk prüfen Ihre Betriebsmittel gemäß DGUV Vorschrift 3." },
   { icon: FileText,     title: "Digitale Dokumentation",   desc: "Prüfprotokoll sofort digital verfügbar, Prüfplaketten angebracht, rechtssicher archiviert." },
   { icon: Clock,        title: "Fristenmanagement",        desc: "Automatische Erinnerungen vor dem nächsten Prüftermin — nie wieder abgelaufene Fristen." },
-  { icon: Zap,          title: "KI-Auftragsbündelung",     desc: "Unsere KI bündelt Aufträge regional im Partnernetzwerk — so arbeiten Partner effizienter und Sie zahlen bis zu 20 % weniger als bei klassischen Anbietern." },
+  { icon: Zap,          title: "KI-Auftragsbündelung",     desc: "Unsere KI bündelt Aufträge regional im Partnernetzwerk — so arbeiten Partner effizienter und Sie profitieren von bis zu 20 % Kostenersparnis." },
   { icon: CheckCircle2, title: "Rundum-Schutz",            desc: "Vollständige Compliance ohne eigenen Aufwand — wir übernehmen alles." },
 ];
 
@@ -61,7 +61,7 @@ export default function PageClient() {
                   Rechtssichere DGUV-Prüfung — komplett als Service.
                 </h1>
                 <p className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-xl">
-                  NeuraVolt ist die digitale Plattform für rechtssichere DGUV V3 Prüfungen: zertifizierte Partnerfachkräfte, KI-optimierte Terminplanung, digitale Dokumentation und automatisches Fristenmanagement — bis zu 20 % günstiger.
+                  NeuraVolt ist die digitale Plattform für rechtssichere DGUV V3 Prüfungen: zertifizierte Partnerfachkräfte, KI-optimierte Terminplanung, digitale Dokumentation und automatisches Fristenmanagement — mit bis zu 20 % Kostenersparnis durch Auftragsbündelung.
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <Link href="/contact"
