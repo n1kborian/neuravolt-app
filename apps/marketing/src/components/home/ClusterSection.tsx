@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { motion, useInView } from "motion/react";
 import dynamic from "next/dynamic";
 import { MapPin, CalendarDays, Route, Layers, TrendingDown, Zap } from "lucide-react";
+import { FullscreenToggle } from "@/components/ui/FullscreenToggle";
 import {
   Accordion,
   AccordionContent,
@@ -127,7 +128,9 @@ export function ClusterSection() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="lg:sticky lg:top-28"
           >
-            <ClusterMap />
+            <FullscreenToggle>
+              <ClusterMap />
+            </FullscreenToggle>
           </motion.div>
 
         </div>

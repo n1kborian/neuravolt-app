@@ -3,6 +3,7 @@ import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import { Brain, Bell, BarChart3, Lock } from "lucide-react";
 import { AiAnimation } from "@/components/home/AiAnimation";
+import { FullscreenToggle } from "@/components/ui/FullscreenToggle";
 
 const features = [
   { icon: Brain,    title: "KI-Prozessautomatisierung", desc: "Intelligente Terminplanung und automatische Ressourcenallokation." },
@@ -48,10 +49,13 @@ export function AiSection() {
               initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.1, ease: [0.25, 0.4, 0.25, 1] }}
-              className="w-full rounded-2xl border border-border overflow-hidden shadow-lg"
-              style={{ aspectRatio: "16/9" }}
             >
-              <AiAnimation />
+              <FullscreenToggle
+                className="w-full rounded-2xl border border-border overflow-hidden shadow-lg"
+                style={{ aspectRatio: "16/9" }}
+              >
+                <AiAnimation />
+              </FullscreenToggle>
             </motion.div>
 
             {/* Content card */}
