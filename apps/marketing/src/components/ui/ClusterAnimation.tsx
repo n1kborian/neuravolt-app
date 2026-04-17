@@ -15,10 +15,10 @@ const CY = 42; // cluster center y %
 const PHASE_MS = [900, 650, 650, 650, 1600, 3000];
 
 const STATUS = [
-  "Einzelaufträge in Stuttgart & Region",
-  "Einzelaufträge in Stuttgart & Region",
-  "Einzelaufträge in Stuttgart & Region",
-  "Einzelaufträge in Stuttgart & Region",
+  "Einzelaufträge bundesweit",
+  "Einzelaufträge bundesweit",
+  "Einzelaufträge bundesweit",
+  "Einzelaufträge bundesweit",
   "Lokale Aufträge werden zusammengelegt …",
   "Durch Clusterung 22 % Kosten gespart",
 ];

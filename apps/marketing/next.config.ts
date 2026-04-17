@@ -3,6 +3,11 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   transpilePackages: ["@neuravolt/ui", "@neuravolt/auth", "@neuravolt/database"],
+  async redirects() {
+    return [
+      { source: "/fuer-unternehmen", destination: "/dguv-pruefung", permanent: true },
+    ];
+  },
 };
 
 export default withSentryConfig(nextConfig, {

@@ -14,7 +14,6 @@ type NavLink = {
 
 const links: NavLink[] = [
   { href: "/dguv-pruefung", label: "DGUV-Prüfung" },
-  { href: "/fuer-unternehmen", label: "Für Unternehmen" },
   {
     href: "/branchen",
     label: "Branchen",

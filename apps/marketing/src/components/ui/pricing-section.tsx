@@ -50,7 +50,7 @@ export const PricingSection: React.FC = () => {
               <span className="text-4xl font-bold text-foreground">{PRICING.travelFee}&nbsp;€</span>
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Einmalig pro Einsatz, Stuttgart &amp; Region.
+              Einmalig pro Einsatz, bundesweit.
             </p>
           </div>
 

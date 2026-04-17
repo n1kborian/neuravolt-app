@@ -22,7 +22,6 @@ const footerLinks = {
     { href: "/branchen/einzelhandel", label: "Einzelhandel" },
   ],
   Unternehmen: [
-    { href: "/fuer-unternehmen", label: "Für Unternehmen" },
     { href: "/standorte", label: "Standorte" },
     { href: "/ratgeber", label: "Ratgeber" },
     { href: "/partner", label: "Partner werden" },
@@ -77,7 +76,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-sm text-gray-400 leading-relaxed mb-4">
-              DGUV V3 Betriebsmittelprüfung digital & rechtssicher. Stuttgart & Region.
+              DGUV V3 Betriebsmittelprüfung digital & rechtssicher. Bundesweit aktiv.
             </p>
             <p className="text-xs text-gray-300">
               NeuraVolt<br />Stuttgart, Deutschland
