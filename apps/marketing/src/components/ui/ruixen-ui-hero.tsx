@@ -127,6 +127,8 @@ export default function HeroSection() {
                   alt="Elektrofachkraft bei DGUV V3 Betriebsmittelprüfung mit Messgerät"
                   className="object-cover object-center"
                   unoptimized
+                  priority
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
 

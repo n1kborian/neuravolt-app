@@ -1,9 +1,14 @@
 "use client";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
+import dynamic from "next/dynamic";
 import { Brain, Bell, BarChart3, Lock } from "lucide-react";
-import { AiAnimation } from "@/components/home/AiAnimation";
 import { FullscreenToggle } from "@/components/ui/FullscreenToggle";
+
+const AiAnimation = dynamic(
+  () => import("@/components/home/AiAnimation").then(m => m.AiAnimation),
+  { ssr: false, loading: () => <div className="w-full h-full bg-muted/20 animate-pulse rounded-2xl" /> },
+);
 
 const features = [
   { icon: Brain,    title: "KI-Prozessautomatisierung", desc: "Intelligente Terminplanung und automatische Ressourcenallokation." },
