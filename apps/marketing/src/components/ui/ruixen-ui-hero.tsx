@@ -156,7 +156,7 @@ export default function HeroSection() {
         </div>
 
         {/* Stats row */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {stats.map(({ num, label, sub }, i) => (
             <motion.div
               key={label}
