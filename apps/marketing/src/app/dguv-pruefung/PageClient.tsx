@@ -4,7 +4,7 @@ import { motion, useInView } from "motion/react";
 import NavBar from "@/components/NavBar";
 import { Footer } from "@/components/essentials/Footer";
 import {
-  CheckCircle2, Shield, FileText, Clock, Calendar, Zap, ArrowRight,
+  CheckCircle2, Shield, Clock, Zap, ArrowRight,
   AlertTriangle, TrendingDown, HeadphonesIcon, BarChart3,
   Laptop, Cable, Wrench, Gauge,
 } from "lucide-react";

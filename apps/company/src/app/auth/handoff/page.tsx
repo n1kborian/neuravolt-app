@@ -1,11 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { getSupabaseBrowserClient } from "@neuravolt/auth/client";
 
 export default function HandoffPage() {
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -27,11 +25,11 @@ export default function HandoffPage() {
           setError("Sitzung konnte nicht übernommen werden.");
           return;
         }
-        window.history.replaceState(null, "", "/auth/handoff");
-        router.replace("/dashboard");
-        router.refresh();
+        // Hash entfernen und Hard-Reload erzwingen, damit die Middleware
+        // die frisch geschriebenen Session-Cookies garantiert sieht.
+        window.location.replace("/dashboard");
       });
-  }, [router]);
+  }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
