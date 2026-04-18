@@ -42,6 +42,31 @@ const TARGET_URLS: Record<Portal, string | undefined> = {
   company: process.env.NEXT_PUBLIC_COMPANY_URL,
 };
 
+function isLocalhost(url: string): boolean {
+  try {
+    const { hostname } = new URL(url);
+    return hostname === "localhost" || hostname === "127.0.0.1" || hostname.endsWith(".local");
+  } catch {
+    return false;
+  }
+}
+
+/** Liefert die Ziel-URL oder null, wenn sie für die aktuelle Umgebung unpassend ist. */
+function resolveTargetUrl(portal: Portal): string | null {
+  const envUrl = TARGET_URLS[portal];
+  if (!envUrl) return null;
+
+  if (typeof window !== "undefined") {
+    const onLocalhost =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1";
+    // Im Production-Build darf niemals auf localhost zurückgefallen werden.
+    if (!onLocalhost && isLocalhost(envUrl)) return null;
+  }
+
+  return envUrl;
+}
+
 export function LoginModal({
   open,
   onOpenChange,
@@ -97,9 +122,10 @@ export function LoginModal({
       return;
     }
 
-    const target = TARGET_URLS[portal];
+    const target = resolveTargetUrl(portal);
     if (!target) {
-      setError("Ziel-Portal nicht konfiguriert.");
+      await supabase.auth.signOut();
+      setError("Ziel-Portal nicht konfiguriert. Bitte kontaktieren Sie den Support.");
       setLoading(false);
       return;
     }
