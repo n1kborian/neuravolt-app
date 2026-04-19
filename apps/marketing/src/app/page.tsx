@@ -13,9 +13,9 @@ const FAQSection = dynamic(() => import("@/components/home/FAQSection").then(m =
 const PainSolutionSection = dynamic(() => import("@/components/home/PainSolutionSection").then(m => m.PainSolutionSection));
 
 export const metadata = {
-  title: "NeuraVolt – DGUV V3 Prüfung bundesweit",
+  title: "NeuraVolt – DGUV V3 Prüfung Stuttgart & Region",
   description:
-    "NeuraVolt ist die digitale Plattform für DGUV V3 Betriebsmittelprüfungen — bundesweit aktiv. Zertifizierte Partnerfachkräfte, KI-optimierte Auftragsbündelung, automatisches Fristenmanagement — bis zu 20 % Kostenersparnis. Ab 4,90 €/Gerät.",
+    "NeuraVolt ist die digitale Plattform für DGUV V3 Betriebsmittelprüfungen in Stuttgart und der Region. Zertifizierte Partnerfachkräfte, KI-optimierte Auftragsbündelung, automatisches Fristenmanagement — bis zu 20 % Kostenersparnis. Ab 4,90 €/Gerät.",
 };
 
 export default function HomePage() {

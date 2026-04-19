@@ -73,7 +73,7 @@ export default function PageClient() {
 
                 <div className="rounded-2xl border border-border bg-background/80 backdrop-blur-sm p-6 shadow-lg">
                   <p className="text-sm font-bold text-foreground mb-1">NeuraVolt</p>
-                  <p className="text-sm text-muted-foreground">Bundesweit aktiv</p>
+                  <p className="text-sm text-muted-foreground">Stuttgart & Region</p>
                   <p className="text-sm text-muted-foreground mt-2">info@neuravolt.de</p>
                 </div>
               </motion.div>

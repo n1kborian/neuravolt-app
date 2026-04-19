@@ -60,7 +60,7 @@ export default function HeroSection() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-foreground/20 bg-foreground/05"
           >
             <span className="flex h-2 w-2 rounded-full bg-foreground animate-pulse" />
-            <span className="text-sm font-semibold text-foreground tracking-wide">Bundesweit aktiv</span>
+            <span className="text-sm font-semibold text-foreground tracking-wide">Stuttgart & Region</span>
           </motion.div>
 
           {/* Headline */}

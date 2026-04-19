@@ -10,7 +10,7 @@ const stellen = [
   {
     title: "Elektrofachkraft (m/w/d)",
     type: "Vollzeit / Teilzeit",
-    location: "Bundesweit aktiv",
+    location: "Stuttgart & Region",
     desc: "Sie prüfen elektrische Betriebsmittel vor Ort, erstellen digitale Protokolle und repräsentieren NeuraVolt bei unseren Kunden.",
     anforderungen: [
       "Ausbildung als Elektrofachkraft oder gleichwertige Qualifikation",

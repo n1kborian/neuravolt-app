@@ -3,7 +3,7 @@ import PageClient from "./PageClient";
 export const metadata = {
   title: "DGUV Vorschrift 3 – Prüfpflicht, Fristen & Haftung | NeuraVolt",
   description:
-    "Alles zur DGUV Vorschrift 3: Prüfpflicht, Prüfintervalle, Haftung bei Verstößen und wie NeuraVolt Ihnen hilft, compliant zu bleiben. Für Unternehmen bundesweit.",
+    "Alles zur DGUV Vorschrift 3: Prüfpflicht, Prüfintervalle, Haftung bei Verstößen und wie NeuraVolt Ihnen hilft, compliant zu bleiben. Für Unternehmen in Stuttgart und der Region.",
 };
 
 export default function Page() {

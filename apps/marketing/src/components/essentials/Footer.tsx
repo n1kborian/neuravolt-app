@@ -76,7 +76,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-sm text-gray-400 leading-relaxed mb-4">
-              DGUV V3 Betriebsmittelprüfung digital & rechtssicher. Bundesweit aktiv.
+              DGUV V3 Betriebsmittelprüfung digital & rechtssicher. Stuttgart & Region.
             </p>
             <p className="text-xs text-gray-300">
               NeuraVolt<br />Stuttgart, Deutschland

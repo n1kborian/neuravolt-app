@@ -3,7 +3,7 @@ import PageClient from "./PageClient";
 export const metadata = {
   title: "DGUV V3 Prüfung nach Branche – Intervalle, Pflichten & Preise | NeuraVolt",
   description:
-    "DGUV V3 Betriebsmittelprüfung branchenspezifisch: Büro, Gastronomie, Arztpraxis, Hotel, Werkstatt & Einzelhandel. Prüfintervalle, typische Geräte und transparente Preise ab 4,90 €/Gerät — bundesweit.",
+    "DGUV V3 Betriebsmittelprüfung branchenspezifisch: Büro, Gastronomie, Arztpraxis, Hotel, Werkstatt & Einzelhandel. Prüfintervalle, typische Geräte und transparente Preise ab 4,90 €/Gerät — Stuttgart & Region.",
   keywords: [
     "DGUV V3 Prüfung",
     "DGUV V3 Branchen",
@@ -20,7 +20,7 @@ export const metadata = {
   openGraph: {
     title: "DGUV V3 Prüfung nach Branche – NeuraVolt",
     description:
-      "Branchenspezifische DGUV V3 Betriebsmittelprüfung — bundesweit. Prüfintervalle, typische Geräte und transparente Preise.",
+      "Branchenspezifische DGUV V3 Betriebsmittelprüfung — Stuttgart & Region. Prüfintervalle, typische Geräte und transparente Preise.",
     url: "/branchen",
     type: "website",
   },
@@ -31,7 +31,7 @@ const jsonLd = {
   "@type": "ItemList",
   name: "DGUV V3 Prüfung nach Branche",
   description:
-    "Übersicht branchenspezifischer DGUV V3 Betriebsmittelprüfungen durch NeuraVolt — bundesweit.",
+    "Übersicht branchenspezifischer DGUV V3 Betriebsmittelprüfungen durch NeuraVolt — Stuttgart & Region.",
   itemListElement: [
     { "@type": "ListItem", position: 1, name: "Büro & Verwaltung", url: "/branchen/buero" },
     { "@type": "ListItem", position: 2, name: "Gastronomie", url: "/branchen/gastronomie" },

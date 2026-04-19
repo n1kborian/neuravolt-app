@@ -3,7 +3,7 @@ import PageClient from "./PageClient";
 export const metadata = {
   title: "DGUV V3 Ratgeber – Fristen, Haftung & Prüfpflichten | NeuraVolt",
   description:
-    "Wissensdatenbank zu DGUV Vorschrift 3: Prüfpflichten, Prüfintervalle, Haftung und Tipps für Unternehmen bundesweit.",
+    "Wissensdatenbank zu DGUV Vorschrift 3: Prüfpflichten, Prüfintervalle, Haftung und Tipps für Unternehmen in Stuttgart und der Region.",
 };
 
 export default function Page() {

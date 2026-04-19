@@ -11,11 +11,11 @@ const geist = Geist({
 
 export const metadata: Metadata = {
   title: {
-    default: "NeuraVolt – DGUV V3 Prüfung bundesweit",
+    default: "NeuraVolt – DGUV V3 Prüfung Stuttgart & Region",
     template: "%s | NeuraVolt",
   },
   description:
-    "DGUV V3 Betriebsmittelprüfung digital & rechtssicher. NeuraVolt übernimmt Terminplanung, Prüfung und Dokumentation für KMUs bundesweit. Ab 4,90 € pro Gerät.",
+    "DGUV V3 Betriebsmittelprüfung digital & rechtssicher. NeuraVolt übernimmt Terminplanung, Prüfung und Dokumentation für KMUs in Stuttgart und der Region. Ab 4,90 € pro Gerät.",
   metadataBase: new URL("https://neuravolt.de"),
   openGraph: {
     siteName: "NeuraVolt",
