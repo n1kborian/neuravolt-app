@@ -73,10 +73,9 @@ export default function HeroSection() {
                 transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
                 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight"
               >
-                DGUV-Prüfung{" "}
-                <span className="text-brand">digital.</span>{" "}
-                Fristen{" "}
-                <span className="text-brand">automatisch.</span>
+                Das Prüfernetzwerk
+                <br />
+                für <span className="text-brand">DGUV V3.</span>
               </motion.h1>
 
               <motion.p
@@ -85,7 +84,7 @@ export default function HeroSection() {
                 transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
                 className="mt-6 text-lg text-muted-foreground max-w-2xl text-justify hyphens-auto"
               >
-                NeuraVolt ist die digitale Plattform für DGUV V3 Betriebsmittelprüfungen — mit einem Netzwerk zertifizierter Partner, KI-optimierter Terminplanung und automatischem Fristenmanagement. Bis zu 20 % Kostenersparnis durch intelligente Auftragsbündelung.
+                NeuraVolt ist die digitale Plattform für DGUV V3 Betriebsmittelprüfungen — mit einem Netzwerk zertifizierter Partner, KI-optimierter Terminplanung und automatischem Fristenmanagement. Fester Preis ab 4,90 €/Gerät — in Minuten gebucht, in Tagen geprüft, digital dokumentiert.
               </motion.p>
             </div>
 
