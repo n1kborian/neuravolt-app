@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { getSupabaseBrowserClient } from "@neuravolt/auth/client";
-import { LayoutDashboard, FileText, Cpu, Calendar, User, LogOut, Menu, X } from "lucide-react";
+import { LayoutDashboard, FileText, Cpu, Calendar, User, LogOut, Menu, X, CalendarPlus } from "lucide-react";
 import Link from "next/link";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Übersicht", icon: LayoutDashboard },
+  { href: "/dashboard/anfrage", label: "Termin vereinbaren", icon: CalendarPlus },
   { href: "/dashboard/protokolle", label: "Prüfprotokolle", icon: FileText },
   { href: "/dashboard/geraete", label: "Geräte", icon: Cpu },
   { href: "/dashboard/termine", label: "Termine", icon: Calendar },
