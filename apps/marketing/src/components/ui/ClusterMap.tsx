@@ -45,7 +45,7 @@ const STATUS   = [
   "Aufträge werden zum Cluster gezogen …",          // 11
   "Cluster gebildet · 3 Aufträge · 900 €",         // 12
   "Preis wird optimiert …",                         // 13
-  "Durch lokale Clusterung 22 % günstiger",         // 14
+  "Durch lokale Auftrags-Bündelung 22 % günstiger",         // 14
 ];
 
 /* ─── Dashboard constants ────────────────────────────────────────────────── */

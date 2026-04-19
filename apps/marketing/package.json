@@ -2,6 +2,11 @@
   "name": "marketing",
   "version": "0.0.1",
   "private": true,
+  "browserslist": [
+    ">0.3% and supports es6-module",
+    "not dead",
+    "not op_mini all"
+  ],
   "scripts": {
     "dev": "next dev --port 3000 --hostname 0.0.0.0",
     "build": "next build",

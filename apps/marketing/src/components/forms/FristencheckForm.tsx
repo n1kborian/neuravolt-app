@@ -23,6 +23,10 @@ export function FristencheckForm() {
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Turnstile-Widget lädt erst, wenn Nutzer wirklich mit dem Formular interagiert.
+  // Spart das 17-KiB-Cloudflare-Script auf der Home-Page.
+  const [turnstileReady, setTurnstileReady] = useState(false);
+  const engage = () => setTurnstileReady(true);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -89,6 +93,7 @@ export function FristencheckForm() {
           required
           value={email}
           onChange={e => setEmail(e.target.value)}
+          onFocus={engage}
           placeholder="max@musterfirma.de"
           className="w-full px-3 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-foreground"
         />
@@ -106,10 +111,13 @@ export function FristencheckForm() {
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-foreground mb-1.5">Branche (optional)</label>
+          <label htmlFor="fristencheck-branche" className="block text-xs font-semibold text-foreground mb-1.5">Branche (optional)</label>
           <select
+            id="fristencheck-branche"
+            aria-label="Branche"
             value={branche}
             onChange={e => setBranche(e.target.value)}
+            onFocus={engage}
             className="w-full px-3 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground focus:outline-none focus:border-foreground"
           >
             <option value="">Bitte wählen …</option>
@@ -133,7 +141,7 @@ export function FristencheckForm() {
         </span>
       </label>
 
-      <TurnstileWidget onToken={setTurnstileToken} />
+      {turnstileReady && <TurnstileWidget onToken={setTurnstileToken} />}
 
       {error && (
         <div className="flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">

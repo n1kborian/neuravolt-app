@@ -65,27 +65,17 @@ export default function HeroSection() {
               <span className="text-sm font-medium">Stuttgart & Region</span>
             </motion.div>
 
-            {/* Heading */}
+            {/* Heading — SSR-visible, no motion to keep LCP fast */}
             <div>
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-                className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight"
-              >
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
                 Das Prüfernetzwerk
                 <br />
                 für <span className="text-brand">DGUV V3 Prüfungen.</span>
-              </motion.h1>
+              </h1>
 
-              <motion.p
-                initial={{ opacity: 0, y: 30 }}
-                animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
-                className="mt-6 text-lg text-muted-foreground max-w-2xl text-justify hyphens-auto"
-              >
+              <p className="mt-6 text-lg text-muted-foreground max-w-2xl text-justify hyphens-auto">
                 NeuraVolt vermittelt DGUV V3 Betriebsmittelprüfungen in Stuttgart und der Region — durch ein Netzwerk zertifizierter Elektrofachkräfte, mit KI-optimierter Auftragsplanung und automatischem Fristenmanagement. Fester Preis ab 4,90 €/Gerät — in Minuten gebucht, in Tagen geprüft, digital dokumentiert.
-              </motion.p>
+              </p>
             </div>
 
             {/* CTAs */}
@@ -110,23 +100,18 @@ export default function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Right content — feature card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={isLoaded ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-            className="w-full lg:w-1/2 relative"
-          >
+          {/* Right content — feature card (SSR-visible, no mount animation for LCP) */}
+          <div className="w-full lg:w-1/2 relative">
             <div className="relative bg-background/80 backdrop-blur-sm border border-border rounded-2xl p-6 shadow-lg">
               {/* Image */}
               <div className="aspect-video relative overflow-hidden rounded-lg border border-border mb-6">
                 <Image
-                  src="https://images.pexels.com/photos/442151/pexels-photo-442151.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  src="/images/hero-inspection.jpg"
                   fill
                   alt="Elektrofachkraft bei DGUV V3 Betriebsmittelprüfung mit Messgerät"
                   className="object-cover object-center"
-                  unoptimized
                   priority
+                  fetchPriority="high"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
@@ -153,7 +138,7 @@ export default function HeroSection() {
             {/* Decorative elements */}
             <div className="absolute -top-4 -right-4 w-24 h-24 bg-brand/5 rounded-full blur-2xl" />
             <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-secondary/5 rounded-full blur-2xl" />
-          </motion.div>
+          </div>
         </div>
 
         {/* Stats row */}

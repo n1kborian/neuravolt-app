@@ -162,8 +162,10 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-[#0a0a0a] mb-2">Branche</label>
+        <label htmlFor="contact-branche" className="block text-sm font-medium text-[#0a0a0a] mb-2">Branche</label>
         <select
+          id="contact-branche"
+          aria-label="Branche"
           value={branche}
           onChange={e => setBranche(e.target.value)}
           className="w-full px-4 py-3 rounded-xl border border-gray-200 text-gray-600 focus:outline-none focus:border-foreground focus:ring-2 focus:ring-foreground/10 transition text-sm bg-white"
@@ -174,8 +176,10 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-[#0a0a0a] mb-2">Anzahl zu prüfender Geräte</label>
+        <label htmlFor="contact-devicecount" className="block text-sm font-medium text-[#0a0a0a] mb-2">Anzahl zu prüfender Geräte</label>
         <select
+          id="contact-devicecount"
+          aria-label="Anzahl zu prüfender Geräte"
           value={deviceCountRange}
           onChange={e => setDeviceCountRange(e.target.value)}
           className="w-full px-4 py-3 rounded-xl border border-gray-200 text-gray-600 focus:outline-none focus:border-foreground focus:ring-2 focus:ring-foreground/10 transition text-sm bg-white"
@@ -186,8 +190,10 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-[#0a0a0a] mb-2">Gewünschter Zeitraum der Prüfung</label>
+        <label htmlFor="contact-timeframe" className="block text-sm font-medium text-[#0a0a0a] mb-2">Gewünschter Zeitraum der Prüfung</label>
         <select
+          id="contact-timeframe"
+          aria-label="Gewünschter Zeitraum der Prüfung"
           value={desiredTimeframe}
           onChange={e => setDesiredTimeframe(e.target.value)}
           className="w-full px-4 py-3 rounded-xl border border-gray-200 text-gray-600 focus:outline-none focus:border-foreground focus:ring-2 focus:ring-foreground/10 transition text-sm bg-white"
