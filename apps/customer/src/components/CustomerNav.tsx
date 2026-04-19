@@ -38,7 +38,13 @@ export function CustomerNav({ name }: { name: string }) {
   return (
     <>
       {/* Mobile top bar */}
-      <header className="md:hidden sticky top-0 z-30 flex items-center justify-between px-4 h-14 border-b border-border bg-background/90 backdrop-blur-sm">
+      <header
+        className="md:hidden sticky top-0 z-30 flex items-center justify-between px-4 h-14 bg-background/90 backdrop-blur-sm"
+        style={{
+          boxShadow:
+            "0 1px 0 oklch(0.75 0.18 195 / 0.5), 0 4px 20px oklch(0.75 0.18 195 / 0.08), 0 1px 20px rgba(0,0,0,0.04)",
+        }}
+      >
         <button
           onClick={() => setOpen(true)}
           aria-label="Menü öffnen"
@@ -65,11 +71,15 @@ export function CustomerNav({ name }: { name: string }) {
       <aside
         className={`
           fixed inset-y-0 left-0 z-50 w-64 flex flex-col
-          border-r border-border bg-background/95 backdrop-blur-md
+          bg-background/95 backdrop-blur-md
           transition-transform duration-300 ease-out
           ${open ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0 md:static md:w-56 md:bg-background/80
         `}
+        style={{
+          boxShadow:
+            "1px 0 0 oklch(0.75 0.18 195 / 0.5), 4px 0 20px oklch(0.75 0.18 195 / 0.08), 1px 0 20px rgba(0,0,0,0.04)",
+        }}
       >
         {/* Brand + close button */}
         <div className="px-6 py-5 border-b border-border flex items-start justify-between gap-2">
