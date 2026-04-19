@@ -11,7 +11,7 @@ const NAV_ITEMS = [
   { href: "/dashboard/anfrage", label: "Termin vereinbaren", icon: CalendarPlus },
   { href: "/dashboard/protokolle", label: "Prüfprotokolle", icon: FileText },
   { href: "/dashboard/geraete", label: "Geräte", icon: Cpu },
-  { href: "/dashboard/termine", label: "Termine", icon: Calendar },
+  { href: "/dashboard/termine", label: "Termine verwalten", icon: Calendar },
   { href: "/dashboard/profil", label: "Profil", icon: User },
 ];
 
