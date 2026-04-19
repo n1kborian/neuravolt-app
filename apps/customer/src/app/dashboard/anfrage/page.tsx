@@ -15,7 +15,7 @@ const STATUS_LABEL: Record<string, string> = {
   new: "Eingegangen",
   contacted: "In Bearbeitung",
   quoted: "Angebot versendet",
-  scheduled: "Termin geplant",
+  scheduled: "Beauftragt",
   completed: "Abgeschlossen",
   cancelled: "Storniert",
 };

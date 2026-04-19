@@ -4,11 +4,23 @@ import { getSupabaseServerClient, getCurrentUser } from "@neuravolt/auth/server"
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { DEVICE_TYPES, type ActionState } from "./constants";
+import { getResend, EMAIL_CONFIG, fromField } from "@/lib/resend";
+import {
+  renderInspectionCustomerEmail,
+  renderInspectionTeamEmail,
+  type InspectionRequestEmailInput,
+} from "@/lib/email-templates";
 
 function toInt(v: FormDataEntryValue | null): number | null {
   if (v === null) return null;
   const n = parseInt(String(v), 10);
   return Number.isFinite(n) ? n : null;
+}
+
+function projectRefFromUrl(url: string | undefined): string | undefined {
+  if (!url) return undefined;
+  const match = url.match(/https:\/\/([a-z0-9]+)\.supabase\.co/i);
+  return match?.[1];
 }
 
 export async function submitInspectionRequest(
@@ -89,6 +101,53 @@ export async function submitInspectionRequest(
   if (error || !data) {
     console.error("[inspection-request] insert failed", error);
     return { ok: false, error: "Die Anfrage konnte nicht gespeichert werden. Bitte erneut versuchen." };
+  }
+
+  // E-Mail-Benachrichtigung (nicht blockierend — Anfrage liegt ja schon in der DB)
+  try {
+    if (process.env.RESEND_API_KEY && user.email) {
+      const emailInput: InspectionRequestEmailInput = {
+        requestId: data.id,
+        customerName: user.profile.full_name ?? user.email,
+        customerEmail: user.email,
+        customerCompany: user.profile.company_name ?? null,
+        customerPhone: user.profile.phone ?? null,
+        isFirstInspection,
+        deviceCountNew: deviceCountNew!,
+        deviceCountExisting: isFirstInspection ? null : deviceCountExistingRaw!,
+        lastInspectionDate: isFirstInspection ? null : lastInspectionDateRaw,
+        deviceTypes,
+        desiredTimeframe: desiredTimeframe || null,
+        notes: notes || null,
+      };
+
+      const resend = getResend();
+      const teamMail = renderInspectionTeamEmail({
+        ...emailInput,
+        supabaseProjectRef: projectRefFromUrl(process.env.NEXT_PUBLIC_SUPABASE_URL),
+      });
+      const customerMail = renderInspectionCustomerEmail(emailInput);
+
+      await Promise.all([
+        resend.emails.send({
+          from: fromField(),
+          to: EMAIL_CONFIG.leadsTo,
+          replyTo: user.email,
+          subject: teamMail.subject,
+          html: teamMail.html,
+        }),
+        resend.emails.send({
+          from: fromField(),
+          to: user.email,
+          replyTo: EMAIL_CONFIG.replyTo,
+          subject: customerMail.subject,
+          html: customerMail.html,
+        }),
+      ]);
+    }
+  } catch (err) {
+    console.error("[inspection-request] email send failed", err);
+    // Nicht hart fehlschlagen — DB-Eintrag existiert, Team kann manuell nachfassen.
   }
 
   revalidatePath("/dashboard");

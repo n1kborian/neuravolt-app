@@ -12,6 +12,10 @@ import {
   HeadphonesIcon,
   Zap,
   CheckCircle2,
+  TrendingUp,
+  PhoneOff,
+  Wallet,
+  LayoutGrid,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -25,10 +29,10 @@ const vorteile = [
 ];
 
 const schritte = [
-  { step: "01", title: "Bewerbung einreichen",      desc: "Kurzes Formular ausfüllen — wir melden uns innerhalb von 48 Stunden für ein persönliches Kennenlerngespräch." },
+  { step: "01", title: "Bewerbung einreichen",      desc: "Kurzes Formular ausfüllen — wir melden uns bei Ihnen für ein Kennenlerngespräch und zur Überprüfung Ihrer Qualifikationen." },
   { step: "02", title: "Onboarding & Freischaltung", desc: "Nach einem kurzen Onboarding erhalten Sie Zugang zu Ihrem Partner-Dashboard und werden in unser Partnernetzwerk aufgenommen." },
   { step: "03", title: "Aufträge auswählen",         desc: "Sie sehen verfügbare Aufträge in Ihrer Region und wählen flexibel aus, was zu Ihrem Kalender passt — mit ausreichend Vorlaufzeit." },
-  { step: "04", title: "Prüfen & kassieren",         desc: "Sie führen die Prüfung durch, laden das Protokoll hoch — wir erledigen Abrechnung, Kundenkommunikation und Dokumentation vollautomatisch." },
+  { step: "04", title: "Prüfen & abrechnen",         desc: "Sie führen die Prüfung durch, laden das Protokoll hoch — wir erledigen Abrechnung, Kundenkommunikation und Dokumentation vollautomatisch." },
 ];
 
 const fakten = [
@@ -45,16 +49,25 @@ const fuerWen = [
   "Elektriker im Nebenerwerb",
 ];
 
+const pruefpartnerKernversprechen = [
+  { icon: TrendingUp, title: "Planbare Auslastung", desc: "Gebündelte Aufträge in Ihrer Region — bequem buchbar, wie es in Ihr Auftragsbuch passt." },
+  { icon: PhoneOff,   title: "Keine Akquise",       desc: "Termine per Klick im Online-Portal buchen — ohne Kaltakquise, ohne Marketing-Aufwand." },
+  { icon: Wallet,     title: "Sofortzahlung",       desc: "Zahlung 7 Tage nach Prüfung — statt 30–60 Tagen beim Kunden direkt." },
+  { icon: LayoutGrid, title: "Digitale Tools",      desc: "Dokumentation, Rechnungsstellung und Fristenmanagement inklusive." },
+];
+
 export default function PageClient() {
   const heroRef     = useRef<HTMLDivElement>(null);
   const vorteileRef = useRef<HTMLDivElement>(null);
   const stepRef     = useRef<HTMLDivElement>(null);
+  const kernRef     = useRef<HTMLDivElement>(null);
   const fuerWenRef  = useRef<HTMLDivElement>(null);
   const ctaRef      = useRef<HTMLDivElement>(null);
 
   const heroIn     = useInView(heroRef,     { once: true, amount: 0.15 });
   const vorteileIn = useInView(vorteileRef, { once: true, amount: 0.1  });
   const stepIn     = useInView(stepRef,     { once: true, amount: 0.15 });
+  const kernIn     = useInView(kernRef,     { once: true, amount: 0.15 });
   const fuerWenIn  = useInView(fuerWenRef,  { once: true, amount: 0.2  });
   const ctaIn      = useInView(ctaRef,      { once: true, amount: 0.3  });
 
@@ -183,9 +196,52 @@ export default function PageClient() {
                   animate={stepIn ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: i * 0.08 }}
                   className="group flex flex-col rounded-2xl border border-border bg-background/80 backdrop-blur-sm p-6 shadow-lg transition-all duration-300 hover:border-brand hover:shadow-xl">
-                  <span className="text-5xl font-bold text-foreground/10 group-hover:text-brand transition-colors duration-300 leading-none mb-4 font-mono">{step}</span>
-                  <h3 className="text-base font-semibold text-foreground mb-2">{title}</h3>
+                  <div className="flex items-center gap-4 mb-3">
+                    <span className="text-4xl font-bold text-foreground/10 group-hover:text-brand transition-colors duration-300 leading-none font-mono shrink-0">{step}</span>
+                    <h3 className="text-base font-semibold text-foreground leading-tight">{title}</h3>
+                  </div>
                   <p className="text-sm text-muted-foreground leading-relaxed text-justify hyphens-auto">{desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Kernversprechen für Prüfpartner ───────────────────────────────── */}
+        <section ref={kernRef} className="w-full py-16 md:py-20">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={kernIn ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6 }}
+              className="mb-10 max-w-2xl"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="h-[2px] w-8 bg-foreground" />
+                <span className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground">Für Prüfpartner</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground leading-tight mb-3">
+                Vier Zusagen, die den Unterschied machen
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                Worauf Sie sich als Partner verlassen können — kein Kleingedrucktes, keine Ausnahmen.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {pruefpartnerKernversprechen.map(({ icon: Icon, title, desc }, i) => (
+                <motion.div key={title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={kernIn ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: i * 0.07 }}
+                  className="group rounded-2xl border border-border bg-background/80 backdrop-blur-sm p-6 shadow-lg transition-all duration-300 hover:border-brand hover:shadow-xl">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-background shadow-sm transition-all duration-300 group-hover:border-brand group-hover:bg-brand group-hover:text-brand-foreground">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="font-bold text-foreground">{title}</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
                 </motion.div>
               ))}
             </div>
