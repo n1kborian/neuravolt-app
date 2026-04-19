@@ -2,5 +2,5 @@
   "framework": "nextjs",
   "buildCommand": "cd ../.. && pnpm turbo build --filter=company",
   "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
-  "outputDirectory": "apps/company/.next"
+  "outputDirectory": ".next"
 }
