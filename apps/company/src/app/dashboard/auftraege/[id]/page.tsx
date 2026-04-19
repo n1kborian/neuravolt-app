@@ -47,7 +47,7 @@ export default async function AuftragDetailPage({
   const status = statusLabels[order.status] ?? { label: order.status, className: "bg-muted text-muted-foreground border-border" };
 
   return (
-    <div className="p-8 max-w-4xl">
+    <div className="p-4 md:p-8 max-w-4xl">
       <Link
         href="/dashboard/auftraege"
         className="text-sm text-muted-foreground hover:text-foreground transition inline-flex items-center gap-1.5"

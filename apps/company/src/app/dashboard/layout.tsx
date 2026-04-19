@@ -18,9 +18,9 @@ export default async function DashboardLayout({
     user.profile.company_name ?? user.profile.full_name ?? user.email ?? "Unternehmen";
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-b from-background to-muted/30">
       <DashboardNav companyName={displayName} />
-      <main className="flex-1 overflow-auto">{children}</main>
+      <main className="flex-1 min-w-0">{children}</main>
     </div>
   );
 }

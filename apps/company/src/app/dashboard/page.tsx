@@ -46,9 +46,9 @@ export default async function DashboardPage() {
   ];
 
   return (
-    <div className="p-8">
-      <header className="mb-8">
-        <h1 className="text-2xl font-bold text-foreground">
+    <div className="p-4 md:p-8">
+      <header className="mb-6 md:mb-8">
+        <h1 className="text-xl md:text-2xl font-bold text-foreground">
           Willkommen, {user.profile.company_name ?? user.profile.full_name ?? "Unternehmen"}
         </h1>
         <p className="text-muted-foreground mt-1 text-sm">
@@ -57,20 +57,20 @@ export default async function DashboardPage() {
       </header>
 
       {/* KPI cards */}
-      <section className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
         {kpis.map(({ label, value, sub }) => (
           <div
             key={label}
-            className="rounded-2xl border border-border bg-background/80 backdrop-blur-sm p-5 shadow-lg overflow-hidden"
+            className="rounded-2xl border border-border bg-background/80 backdrop-blur-sm p-5 shadow-lg"
           >
-            <p className="text-xs text-muted-foreground mb-2 truncate">{label}</p>
-            <p className="text-3xl font-bold text-foreground leading-none mb-2 truncate">{value}</p>
-            <p className="text-[10px] text-muted-foreground truncate">{sub}</p>
+            <p className="text-xs text-muted-foreground mb-2">{label}</p>
+            <p className="text-2xl md:text-3xl font-bold text-foreground leading-none mb-2">{value}</p>
+            <p className="text-[11px] text-muted-foreground">{sub}</p>
           </div>
         ))}
       </section>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
         {/* Upcoming open orders */}
         <section className="rounded-2xl border border-border bg-background/80 shadow-lg">
           <div className="px-6 py-4 border-b border-border flex items-center justify-between">

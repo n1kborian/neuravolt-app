@@ -22,7 +22,7 @@ export default async function AuftraegePage({
   const orders = await getOrders(filters);
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       <header className="mb-8">
         <h1 className="text-2xl font-bold text-foreground">Verfügbare Aufträge</h1>
         <p className="text-muted-foreground mt-1 text-sm">

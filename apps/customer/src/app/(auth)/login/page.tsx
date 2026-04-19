@@ -12,12 +12,9 @@ export default function LoginPage({
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-muted/30 px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 mb-4">
-            <div className="h-8 w-8 rounded-xl bg-brand flex items-center justify-center">
-              <span className="text-brand-foreground font-bold text-sm">N</span>
-            </div>
-            <span className="font-bold text-lg text-foreground">NeuraVolt</span>
-          </div>
+          <span className="inline-block tracking-widest font-bold text-xl text-foreground mb-5">
+            NEURA<span className="font-normal">VOLT</span>
+          </span>
           <h1 className="text-2xl font-bold text-foreground">Willkommen zurück</h1>
           <p className="text-muted-foreground mt-2 text-sm">
             Melden Sie sich mit Ihrer E-Mail und Ihrem Passwort an

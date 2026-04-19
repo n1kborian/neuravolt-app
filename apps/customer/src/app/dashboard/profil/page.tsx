@@ -9,7 +9,7 @@ export default async function ProfilPage() {
   if (!user) redirect("/login");
 
   return (
-    <div className="p-8 max-w-2xl">
+    <div className="p-4 md:p-8 max-w-2xl">
       <header className="mb-8">
         <h1 className="text-2xl font-bold text-foreground">Profil</h1>
         <p className="text-muted-foreground mt-1 text-sm">
