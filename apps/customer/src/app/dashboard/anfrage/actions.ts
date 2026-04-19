@@ -42,6 +42,10 @@ export async function submitInspectionRequest(
   const deviceCountExistingRaw = toInt(formData.get("deviceCountExisting"));
   const lastInspectionDateRaw = String(formData.get("lastInspectionDate") ?? "").trim();
 
+  const addressStreet = String(formData.get("addressStreet") ?? "").trim();
+  const addressPostalCode = String(formData.get("addressPostalCode") ?? "").trim();
+  const addressCity = String(formData.get("addressCity") ?? "").trim();
+
   const fieldErrors: Record<string, string> = {};
 
   if (deviceCountNew === null || deviceCountNew < 0 || deviceCountNew > 10000) {
@@ -78,6 +82,20 @@ export async function submitInspectionRequest(
     fieldErrors.notes = "Anmerkungen dürfen maximal 2000 Zeichen haben.";
   }
 
+  if (!addressStreet || addressStreet.length < 3) {
+    fieldErrors.addressStreet = "Straße und Hausnummer angeben.";
+  } else if (addressStreet.length > 200) {
+    fieldErrors.addressStreet = "Maximal 200 Zeichen.";
+  }
+  if (!addressPostalCode || !/^\d{4,5}$/.test(addressPostalCode)) {
+    fieldErrors.addressPostalCode = "Gültige Postleitzahl angeben.";
+  }
+  if (!addressCity || addressCity.length < 2) {
+    fieldErrors.addressCity = "Ort angeben.";
+  } else if (addressCity.length > 120) {
+    fieldErrors.addressCity = "Maximal 120 Zeichen.";
+  }
+
   if (Object.keys(fieldErrors).length > 0) {
     return { ok: false, error: "Bitte prüfen Sie die markierten Felder.", fieldErrors };
   }
@@ -94,6 +112,9 @@ export async function submitInspectionRequest(
       device_types: deviceTypes,
       desired_timeframe: desiredTimeframe,
       notes: notes || null,
+      address_street: addressStreet,
+      address_postal_code: addressPostalCode,
+      address_city: addressCity,
     })
     .select("id")
     .single();
@@ -119,6 +140,9 @@ export async function submitInspectionRequest(
         deviceTypes,
         desiredTimeframe: desiredTimeframe || null,
         notes: notes || null,
+        addressStreet,
+        addressPostalCode,
+        addressCity,
       };
 
       const resend = getResend();

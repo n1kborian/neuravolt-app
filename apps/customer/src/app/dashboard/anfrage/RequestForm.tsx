@@ -213,6 +213,64 @@ export function RequestForm() {
         )}
       </div>
 
+      {/* Address */}
+      <fieldset>
+        <legend className="text-sm font-semibold text-foreground mb-1">
+          Adresse der Durchführung
+        </legend>
+        <p className="text-xs text-muted-foreground mb-3">
+          Anschrift, an der die Prüfung stattfinden soll — die Partnerfachkraft kommt direkt dorthin.
+        </p>
+        <div className="space-y-3">
+          <div>
+            <input
+              type="text"
+              name="addressStreet"
+              placeholder="Straße und Hausnummer"
+              autoComplete="street-address"
+              required
+              maxLength={200}
+              className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition"
+            />
+            {fieldErrors.addressStreet && (
+              <p className="text-xs text-red-600 mt-1.5">{fieldErrors.addressStreet}</p>
+            )}
+          </div>
+          <div className="grid grid-cols-[100px_1fr] gap-3">
+            <div>
+              <input
+                type="text"
+                name="addressPostalCode"
+                placeholder="PLZ"
+                autoComplete="postal-code"
+                inputMode="numeric"
+                required
+                maxLength={5}
+                pattern="\d{4,5}"
+                className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition"
+              />
+              {fieldErrors.addressPostalCode && (
+                <p className="text-xs text-red-600 mt-1.5">{fieldErrors.addressPostalCode}</p>
+              )}
+            </div>
+            <div>
+              <input
+                type="text"
+                name="addressCity"
+                placeholder="Ort"
+                autoComplete="address-level2"
+                required
+                maxLength={120}
+                className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition"
+              />
+              {fieldErrors.addressCity && (
+                <p className="text-xs text-red-600 mt-1.5">{fieldErrors.addressCity}</p>
+              )}
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
       {/* Notes */}
       <div>
         <label htmlFor="notes" className="block text-sm font-semibold text-foreground mb-1.5">

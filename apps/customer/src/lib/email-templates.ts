@@ -67,6 +67,15 @@ export interface InspectionRequestEmailInput {
   deviceTypes: string[];
   desiredTimeframe: string | null;
   notes: string | null;
+  addressStreet: string;
+  addressPostalCode: string;
+  addressCity: string;
+}
+
+function formatAddress(input: InspectionRequestEmailInput): string {
+  return [input.addressStreet, `${input.addressPostalCode} ${input.addressCity}`.trim()]
+    .filter(Boolean)
+    .join(", ");
 }
 
 const DEVICE_TYPE_LABELS: Record<string, string> = {
@@ -113,6 +122,7 @@ export function renderInspectionCustomerEmail(
           `}
         <tr><td class="label">Gerätekategorien</td><td class="value">${escapeHtml(deviceTypesList(input.deviceTypes))}</td></tr>
         ${input.desiredTimeframe ? `<tr><td class="label">Wunschzeitraum</td><td class="value">${escapeHtml(input.desiredTimeframe)}</td></tr>` : ""}
+        <tr><td class="label">Adresse der Durchführung</td><td class="value">${escapeHtml(formatAddress(input))}</td></tr>
       </table>
     </div>
 
@@ -146,6 +156,7 @@ export function renderInspectionTeamEmail(
         ${input.customerCompany ? `<tr><td class="label">Unternehmen</td><td class="value">${escapeHtml(input.customerCompany)}</td></tr>` : ""}
         <tr><td class="label">E-Mail</td><td class="value"><a href="mailto:${escapeHtml(input.customerEmail)}">${escapeHtml(input.customerEmail)}</a></td></tr>
         ${input.customerPhone ? `<tr><td class="label">Telefon</td><td class="value">${escapeHtml(input.customerPhone)}</td></tr>` : ""}
+        <tr><td class="label">Adresse der Durchführung</td><td class="value">${escapeHtml(formatAddress(input))}</td></tr>
       </table>
     </div>
 
