@@ -8,10 +8,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 const stats = [
-  { num: "4,90 €", label: "Pro Gerät",        sub: "zzgl. MwSt. · kein Vertrag nötig" },
-  { num: "24h",    label: "Rückmeldung",      sub: "Angebot innerhalb eines Werktages" },
-  { num: "100%",   label: "Rechtssicher",     sub: "Zertifizierte Elektrofachkräfte" },
-  { num: "−20 %",  label: "Kostenersparnis", sub: "Durch KI-gestützte Auftragsbündelung" },
+  { num: "4,90 €", label: "Pro Gerät",          sub: "zzgl. MwSt. · kein Vertrag nötig" },
+  { num: "24h",    label: "Rückmeldung",        sub: "Angebot innerhalb eines Werktages" },
+  { num: "100%",   label: "Rechtssicher",       sub: "Zertifizierte Elektrofachkräfte" },
+  { num: "KI",     label: "Auftragsbündelung", sub: "Regional gebündelt — direkt im Preis" },
 ];
 
 export default function HeroSection() {
@@ -20,7 +20,7 @@ export default function HeroSection() {
   const features = [
     "Zugang zum NeuraVolt-Partnernetzwerk zertifizierter Elektrofachkräfte",
     "Prüfung durch zertifizierte Elektrofachkräfte — ohne Betriebsunterbrechung",
-    "Bis zu 20 % Kostenersparnis durch KI-gestützte Auftragsbündelung",
+    "KI-gestützte Auftragsbündelung — Effizienzvorteil direkt im Festpreis",
     "Automatisches Fristenmanagement inklusive",
   ];
 
@@ -75,7 +75,7 @@ export default function HeroSection() {
               >
                 Das Prüfernetzwerk
                 <br />
-                für <span className="text-brand">DGUV V3.</span>
+                für <span className="text-brand">DGUV V3 Prüfungen.</span>
               </motion.h1>
 
               <motion.p
@@ -84,7 +84,7 @@ export default function HeroSection() {
                 transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
                 className="mt-6 text-lg text-muted-foreground max-w-2xl text-justify hyphens-auto"
               >
-                NeuraVolt ist die digitale Plattform für DGUV V3 Betriebsmittelprüfungen — mit einem Netzwerk zertifizierter Partner, KI-optimierter Terminplanung und automatischem Fristenmanagement. Fester Preis ab 4,90 €/Gerät — in Minuten gebucht, in Tagen geprüft, digital dokumentiert.
+                NeuraVolt vermittelt DGUV V3 Betriebsmittelprüfungen in Stuttgart und der Region — durch ein Netzwerk zertifizierter Elektrofachkräfte, mit KI-optimierter Auftragsplanung und automatischem Fristenmanagement. Fester Preis ab 4,90 €/Gerät — in Minuten gebucht, in Tagen geprüft, digital dokumentiert.
               </motion.p>
             </div>
 

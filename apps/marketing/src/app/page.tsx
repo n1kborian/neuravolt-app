@@ -15,12 +15,76 @@ const PainSolutionSection = dynamic(() => import("@/components/home/PainSolution
 export const metadata = {
   title: "NeuraVolt – DGUV V3 Prüfung Stuttgart & Region",
   description:
-    "NeuraVolt ist die digitale Plattform für DGUV V3 Betriebsmittelprüfungen in Stuttgart und der Region. Zertifizierte Partnerfachkräfte, KI-optimierte Auftragsbündelung, automatisches Fristenmanagement — bis zu 20 % Kostenersparnis. Ab 4,90 €/Gerät.",
+    "Das Prüfernetzwerk für DGUV V3 Betriebsmittelprüfungen in Stuttgart und der Region. Zertifizierte Elektrofachkräfte, digitale Protokolle, automatisches Fristenmanagement. Festpreis ab 4,90 €/Gerät — in Minuten gebucht, in Tagen geprüft.",
+  alternates: {
+    canonical: "https://neuravolt.de/",
+  },
 };
+
+const homeJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "NeuraVolt",
+    url: "https://neuravolt.de",
+    email: "info@neuravolt.de",
+    logo: "https://neuravolt.de/icon.png",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Schwalbenweg 6",
+      addressLocality: "Korntal-Münchingen",
+      postalCode: "70825",
+      addressCountry: "DE",
+    },
+    areaServed: [
+      { "@type": "City", name: "Stuttgart" },
+      { "@type": "City", name: "Ludwigsburg" },
+      { "@type": "City", name: "Esslingen am Neckar" },
+      { "@type": "City", name: "Sindelfingen" },
+      { "@type": "City", name: "Leonberg" },
+      { "@type": "City", name: "Ditzingen" },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "DGUV V3 Betriebsmittelprüfung",
+    serviceType: "Elektroprüfung nach DGUV Vorschrift 3",
+    description:
+      "Rechtssichere DGUV V3 Prüfung elektrischer Betriebsmittel durch zertifizierte Partner­fachkräfte — digital dokumentiert, mit automatischem Fristenmanagement.",
+    provider: {
+      "@type": "LocalBusiness",
+      name: "NeuraVolt",
+      url: "https://neuravolt.de",
+      email: "info@neuravolt.de",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Schwalbenweg 6",
+        addressLocality: "Korntal-Münchingen",
+        postalCode: "70825",
+        addressCountry: "DE",
+      },
+    },
+    areaServed: "Stuttgart & Metropolregion",
+    offers: {
+      "@type": "Offer",
+      priceSpecification: {
+        "@type": "UnitPriceSpecification",
+        price: "4.90",
+        priceCurrency: "EUR",
+        unitText: "Gerät",
+      },
+    },
+  },
+];
 
 export default function HomePage() {
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeJsonLd) }}
+      />
       <NavBar />
       <main>
         <HeroSection />
