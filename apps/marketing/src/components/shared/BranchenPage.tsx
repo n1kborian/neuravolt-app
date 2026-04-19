@@ -22,6 +22,10 @@ interface BranchenPageProps {
   image: string;
   imageAlt?: string;
   cta?: string;
+  /** Optionaler Banner zwischen NavBar und Hero (z. B. für Verfügbarkeits-Hinweis). */
+  notice?: React.ReactNode;
+  /** Optional vor dem finalen CTA einblendbar (z. B. lokale Anker, Cross-Links). */
+  afterContent?: React.ReactNode;
 }
 
 export function BranchenPageTemplate({
@@ -36,6 +40,8 @@ export function BranchenPageTemplate({
   image,
   imageAlt,
   cta = "Kostenlose Anfrage stellen",
+  notice,
+  afterContent,
 }: BranchenPageProps) {
   const Icon = ICON_MAP[iconName];
   const heroFeatures = besonderheiten.slice(0, 4);
@@ -55,6 +61,12 @@ export function BranchenPageTemplate({
     <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-b from-background to-muted/30">
       <NavBar />
       <main className="pt-20">
+
+        {notice ? (
+          <div className="w-full">
+            <div className="container mx-auto px-4 pt-6">{notice}</div>
+          </div>
+        ) : null}
 
         {/* ── Hero ──────────────────────────────────────────────────────────── */}
         <section ref={heroRef} className="w-full py-16 md:py-24">
@@ -239,6 +251,8 @@ export function BranchenPageTemplate({
             </div>
           </div>
         </section>
+
+        {afterContent}
 
         {/* ── Inline CTA ────────────────────────────────────────────────────── */}
         <section ref={ctaRef} className="w-full pb-8">

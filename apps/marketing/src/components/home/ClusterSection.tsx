@@ -79,7 +79,7 @@ export function ClusterSection() {
         >
           <div className="flex items-center gap-3 mb-4">
             <div className="h-[2px] w-8 bg-foreground" />
-            <span className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground">Wie wir sparen</span>
+            <span className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground">Wie wir sparen und Sie profitieren</span>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight mb-4">
             Auftrags-Clusterung reduziert Ihre Kosten

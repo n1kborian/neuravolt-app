@@ -5,19 +5,7 @@ import NavBar from "@/components/NavBar";
 import { Footer } from "@/components/essentials/Footer";
 import { ArrowRight, MapPin, Phone, Mail, Clock } from "lucide-react";
 import Link from "next/link";
-
-const regionen = [
-  "Stuttgart (Innenstadt & Bezirke)",
-  "Ludwigsburg",
-  "Esslingen am Neckar",
-  "Waiblingen / Rems-Murr-Kreis",
-  "Böblingen / Sindelfingen",
-  "Leinfelden-Echterdingen",
-  "Filderstadt",
-  "Fellbach",
-  "Kornwestheim",
-  "Geislingen an der Steige",
-];
+import { SEO_LOCATIONS, SEO_LOCATION_SLUGS } from "@/lib/seo/locations";
 
 const contact = [
   { icon: Mail,  label: "info@neuravolt.de" },
@@ -101,21 +89,36 @@ export default function PageClient() {
                   <div className="h-[2px] w-8 bg-foreground" />
                   <span className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground">Servicegebiete</span>
                 </div>
-                <div className="grid grid-cols-2 gap-2.5 mb-6">
-                  {regionen.map((r, i) => (
-                    <motion.div key={r}
-                      initial={{ opacity: 0, x: -8 }}
-                      animate={contentIn ? { opacity: 1, x: 0 } : {}}
-                      transition={{ duration: 0.3, delay: 0.15 + i * 0.04 }}
-                      className="flex items-center gap-2 text-sm text-muted-foreground"
-                    >
-                      <div className="w-1.5 h-1.5 rounded-full bg-brand shrink-0" />
-                      {r}
-                    </motion.div>
-                  ))}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-6">
+                  {SEO_LOCATION_SLUGS.map((slug, i) => {
+                    const loc = SEO_LOCATIONS[slug];
+                    const available = loc.availability === "available";
+                    return (
+                      <motion.div key={slug}
+                        initial={{ opacity: 0, x: -8 }}
+                        animate={contentIn ? { opacity: 1, x: 0 } : {}}
+                        transition={{ duration: 0.3, delay: 0.15 + i * 0.04 }}
+                      >
+                        <Link
+                          href={`/standorte/${slug}`}
+                          className="group flex items-center justify-between gap-2 rounded-xl border border-border bg-background px-3 py-2.5 text-sm text-foreground transition-all hover:border-foreground hover:bg-foreground hover:text-background"
+                        >
+                          <span className="flex items-center gap-2 min-w-0">
+                            <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${available ? "bg-brand" : "bg-muted-foreground"}`} />
+                            <span className="truncate">{loc.name}</span>
+                          </span>
+                          {!available && (
+                            <span className="shrink-0 text-[9px] font-bold uppercase tracking-wide text-muted-foreground group-hover:text-background/70">
+                              bald
+                            </span>
+                          )}
+                        </Link>
+                      </motion.div>
+                    );
+                  })}
                 </div>
                 <div className="pt-5 border-t border-border">
-                  <p className="text-xs text-muted-foreground">Andere Region? Fragen Sie uns an — wir erweitern unser Servicegebiet kontinuierlich.</p>
+                  <p className="text-xs text-muted-foreground">Ihr Standort nicht dabei? <Link href="/contact" className="underline hover:text-foreground transition">Fragen Sie uns an</Link> — wir erweitern kontinuierlich.</p>
                 </div>
               </motion.div>
             </div>

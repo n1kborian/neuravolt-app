@@ -5,12 +5,23 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { LogIn } from "lucide-react";
 import { LoginModal } from "./LoginModal";
+import { SEO_LOCATIONS, SEO_LOCATION_SLUGS } from "@/lib/seo/locations";
 
+type NavChild = { href: string; label: string; badge?: string };
 type NavLink = {
   href: string;
   label: string;
-  children?: { href: string; label: string }[];
+  children?: NavChild[];
 };
+
+const standorteChildren: NavChild[] = SEO_LOCATION_SLUGS.map(slug => {
+  const loc = SEO_LOCATIONS[slug];
+  return {
+    href: `/standorte/${slug}`,
+    label: loc.name,
+    badge: loc.availability === "coming-soon" ? "bald" : undefined,
+  };
+});
 
 const links: NavLink[] = [
   { href: "/dguv-pruefung", label: "DGUV-Prüfung" },
@@ -26,6 +37,11 @@ const links: NavLink[] = [
       { href: "/branchen/einzelhandel", label: "Einzelhandel" },
     ],
   },
+  {
+    href: "/standorte",
+    label: "Standorte",
+    children: standorteChildren,
+  },
   { href: "/angebote", label: "Preise" },
   { href: "/ratgeber", label: "Ratgeber" },
   { href: "/partner", label: "Partner werden" },
@@ -37,16 +53,19 @@ const chevron = (open: boolean) => (
   </svg>
 );
 
+const allOverviewLabel = (label: string) =>
+  label === "Branchen" ? "Alle Branchen →" : "Alle Standorte →";
+
 export default function NavBar() {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
-  const dropdownRef = useRef<HTMLLIElement | null>(null);
+  const dropdownRefs = useRef<Map<string, HTMLLIElement>>(new Map());
   const dropdownTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -58,7 +77,7 @@ export default function NavBar() {
 
   useEffect(() => { document.body.style.overflow = open ? "hidden" : ""; }, [open]);
 
-  const branchenLink = links.find(l => l.children);
+  const openDropdownLink = links.find(l => l.label === openDropdown && l.children);
 
   const overlay = open ? (
     <>
@@ -70,28 +89,33 @@ export default function NavBar() {
       <div className="fixed inset-0 z-[9999] flex items-start justify-center pt-24 md:hidden">
         <div
           ref={panelRef}
-          className="w-[88%] max-w-sm rounded-2xl p-6 flex flex-col gap-1 bg-white border border-border shadow-xl"
+          className="w-[88%] max-w-sm rounded-2xl p-6 flex flex-col gap-1 bg-white border border-border shadow-xl max-h-[80vh] overflow-y-auto"
         >
           {links.map(l =>
             l.children ? (
               <div key={l.label} className="py-0.5">
                 <button
-                  onClick={() => setMobileDropdownOpen(o => !o)}
+                  onClick={() => setOpenMobileDropdown(prev => prev === l.label ? null : l.label)}
                   className="w-full flex items-center justify-between py-3 px-4 rounded-xl text-foreground hover:bg-muted transition font-medium text-sm"
                 >
                   {l.label}
-                  {chevron(mobileDropdownOpen)}
+                  {chevron(openMobileDropdown === l.label)}
                 </button>
-                {mobileDropdownOpen && (
+                {openMobileDropdown === l.label && (
                   <div className="pl-4">
-                    <Link href={l.href} onClick={() => { setOpen(false); setMobileDropdownOpen(false); }}
+                    <Link href={l.href} onClick={() => { setOpen(false); setOpenMobileDropdown(null); }}
                       className="block py-2 px-4 rounded-xl text-foreground font-semibold hover:bg-muted transition text-sm">
-                      Alle Branchen →
+                      {allOverviewLabel(l.label)}
                     </Link>
                     {l.children.map(child => (
-                      <Link key={child.href} href={child.href} onClick={() => { setOpen(false); setMobileDropdownOpen(false); }}
-                        className="block py-2 px-4 rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground transition text-sm">
-                        {child.label}
+                      <Link key={child.href} href={child.href} onClick={() => { setOpen(false); setOpenMobileDropdown(null); }}
+                        className="flex items-center justify-between gap-2 py-2 px-4 rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground transition text-sm">
+                        <span className="truncate">{child.label}</span>
+                        {child.badge && (
+                          <span className="shrink-0 text-[9px] font-bold uppercase tracking-wide text-muted-foreground">
+                            {child.badge}
+                          </span>
+                        )}
                       </Link>
                     ))}
                   </div>
@@ -154,15 +178,22 @@ export default function NavBar() {
         <ul className="hidden md:flex gap-6 items-center text-sm">
           {links.map(l =>
             l.children ? (
-              <li key={l.label} ref={dropdownRef} className="relative">
+              <li
+                key={l.label}
+                ref={(node) => {
+                  if (node) dropdownRefs.current.set(l.label, node);
+                  else dropdownRefs.current.delete(l.label);
+                }}
+                className="relative"
+              >
                 <button
-                  onClick={() => setDropdownOpen(o => !o)}
-                  onMouseEnter={() => { if (dropdownTimeout.current) clearTimeout(dropdownTimeout.current); setDropdownOpen(true); }}
-                  onMouseLeave={() => { dropdownTimeout.current = setTimeout(() => setDropdownOpen(false), 150); }}
+                  onClick={() => setOpenDropdown(prev => prev === l.label ? null : l.label)}
+                  onMouseEnter={() => { if (dropdownTimeout.current) clearTimeout(dropdownTimeout.current); setOpenDropdown(l.label); }}
+                  onMouseLeave={() => { dropdownTimeout.current = setTimeout(() => setOpenDropdown(null), 150); }}
                   className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors font-medium"
                 >
                   {l.label}
-                  {chevron(dropdownOpen)}
+                  {chevron(openDropdown === l.label)}
                 </button>
               </li>
             ) : (
@@ -214,28 +245,33 @@ export default function NavBar() {
         </button>
       </nav>
 
-      {/* Branchen dropdown */}
-      {mounted && dropdownOpen && typeof document !== "undefined" &&
+      {/* Dropdown portal (Branchen / Standorte — je nachdem, welches offen ist) */}
+      {mounted && openDropdown && openDropdownLink && typeof document !== "undefined" &&
         createPortal(
           (() => {
-            const rect = dropdownRef.current?.getBoundingClientRect();
+            const rect = dropdownRefs.current.get(openDropdown)?.getBoundingClientRect();
             if (!rect) return null;
             return (
               <div
                 className="fixed min-w-[220px] rounded-2xl py-2 bg-white border border-border shadow-lg"
                 style={{ top: rect.bottom + 8, left: rect.left, zIndex: 9999 }}
                 onMouseEnter={() => { if (dropdownTimeout.current) clearTimeout(dropdownTimeout.current); }}
-                onMouseLeave={() => { dropdownTimeout.current = setTimeout(() => setDropdownOpen(false), 150); }}
+                onMouseLeave={() => { dropdownTimeout.current = setTimeout(() => setOpenDropdown(null), 150); }}
               >
-                <Link href="/branchen" onClick={() => setDropdownOpen(false)}
+                <Link href={openDropdownLink.href} onClick={() => setOpenDropdown(null)}
                   className="block px-4 py-2 text-foreground font-bold hover:bg-muted transition rounded-xl mx-1 text-sm">
-                  Alle Branchen →
+                  {allOverviewLabel(openDropdownLink.label)}
                 </Link>
                 <div className="my-1 mx-3 border-t border-border" />
-                {branchenLink?.children?.map(item => (
-                  <Link key={item.href} href={item.href} onClick={() => setDropdownOpen(false)}
-                    className="block px-4 py-2 text-muted-foreground hover:bg-muted hover:text-foreground transition rounded-xl mx-1 text-sm">
-                    {item.label}
+                {openDropdownLink.children?.map(item => (
+                  <Link key={item.href} href={item.href} onClick={() => setOpenDropdown(null)}
+                    className="flex items-center justify-between gap-2 px-4 py-2 text-muted-foreground hover:bg-muted hover:text-foreground transition rounded-xl mx-1 text-sm">
+                    <span className="truncate">{item.label}</span>
+                    {item.badge && (
+                      <span className="shrink-0 text-[9px] font-bold uppercase tracking-wide text-muted-foreground">
+                        {item.badge}
+                      </span>
+                    )}
                   </Link>
                 ))}
               </div>

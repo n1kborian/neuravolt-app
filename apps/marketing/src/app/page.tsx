@@ -10,6 +10,7 @@ const ClusterSection = dynamic(() => import("@/components/home/ClusterSection").
 const AiSection = dynamic(() => import("@/components/home/AiSection").then(m => m.AiSection));
 const FristencheckSection = dynamic(() => import("@/components/home/FristencheckSection").then(m => m.FristencheckSection));
 const FAQSection = dynamic(() => import("@/components/home/FAQSection").then(m => m.FAQSection));
+const PainSolutionSection = dynamic(() => import("@/components/home/PainSolutionSection").then(m => m.PainSolutionSection));
 
 export const metadata = {
   title: "NeuraVolt – DGUV V3 Prüfung bundesweit",
@@ -29,6 +30,7 @@ export default function HomePage() {
         <AiSection />
         <FristencheckSection />
         <FAQSection />
+        <PainSolutionSection />
         <CTASection />
       </main>
       <Footer />
