@@ -68,7 +68,7 @@ export default function PageClient() {
                 Nur ein Preismodell: pro Gerät, ohne Abo, ohne Vertragsbindung. Hinzu kommen eine einmalige Anfahrtspauschale und — nur bei der Erstprüfung — ein einmaliger Einrichtungspreis. Keine versteckten Kosten.
               </p>
               <p className="text-muted-foreground text-lg leading-relaxed">
-                Beantworten Sie unten sechs kurze Fragen und erhalten Sie Ihr individuelles, unverbindliches Angebot direkt per E-Mail.
+                Beantworten Sie unten sechs kurze Fragen und erhalten Sie Ihr individuelles Angebot direkt per E-Mail.
               </p>
             </motion.div>
           </div>

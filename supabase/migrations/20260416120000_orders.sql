@@ -121,5 +121,5 @@ values
   ('Praxis Dr. Weber',      'Dr. Lisa Weber',   'weber@example.com',    'Esslingen',           '73728', 'Arztpraxis',        15,  false, '2026-06-01', 'Innerhalb der nächsten 3 Monate',  490, 12250, 'open'),
   ('Hotel Krone',            'Stefan Krone',     'krone@example.com',    'Stuttgart',           '70178', 'Hotel',            120,  true,  '2026-06-10', 'Innerhalb der nächsten 6 Monate',  390, 55700, 'open'),
   ('AutoFix Werkstatt',      'Klaus Fischer',   'fischer@example.com',  'Korntal-Münchingen',  '70825', 'Werkstatt',         62,  true,  '2026-05-20', 'Innerhalb des nächsten Monats',    450, 36800, 'open'),
-  ('Mode Boutique Anna',     'Anna Schwarz',    'schwarz@example.com',  'Böblingen',           '71032', 'Einzelhandel',      33,  false, '2026-07-01', 'Flexibel / unverbindlich',         490, 21070, 'open')
+  ('Mode Boutique Anna',     'Anna Schwarz',    'schwarz@example.com',  'Böblingen',           '71032', 'Einzelhandel',      33,  false, '2026-07-01', 'Flexibel',         490, 21070, 'open')
 on conflict do nothing;
