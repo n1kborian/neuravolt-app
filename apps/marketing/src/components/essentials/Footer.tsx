@@ -25,7 +25,6 @@ const footerLinks = {
     { href: "/standorte", label: "Standorte" },
     { href: "/ratgeber", label: "Ratgeber" },
     { href: "/partner", label: "Partner werden" },
-    { href: "/hiring", label: "Karriere" },
     { href: "/contact", label: "Kontakt" },
   ],
 };

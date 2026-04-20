@@ -59,7 +59,7 @@ const steps = [
     icon: TrendingDown,
     value: "step-6",
     title: "Ersparnis weitergeben",
-    body: "Die eingesparten Anfahrts- und Planungskosten geben wir direkt an Sie weiter. Durch Clusterung sind Kostenersparnisse von bis zu 20 % möglich — ohne Abstriche bei Qualität oder Rechtssicherheit.",
+    body: "Die eingesparten Anfahrts- und Planungskosten geben wir direkt an Sie weiter. Durch Auftrags-Bündelung sind Kostenersparnisse von bis zu 20 % möglich — ohne Abstriche bei Qualität oder Rechtssicherheit.",
   },
 ];
 
@@ -82,7 +82,7 @@ export function ClusterSection() {
             <span className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground">Wie wir sparen und Sie profitieren</span>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight mb-4">
-            Auftrags-Clusterung reduziert Ihre Kosten
+            Auftrags-Bündelung reduziert Ihre Kosten
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl">
             Durch zeitliche und lokale Zusammenlegung nahegelegener Aufträge senken wir Anfahrts- und Planungskosten — und geben die Ersparnis direkt an Sie weiter.

@@ -272,7 +272,7 @@ export function PriceCalculator() {
               {step === 3 && (
                 <StepWrapper key="3">
                   <StepTitle>Wann soll die Prüfung stattfinden?</StepTitle>
-                  <StepHint>Je flexibler, desto besser können wir Aufträge bündeln — und Sie sparen durch Clusterung.</StepHint>
+                  <StepHint>Je flexibler und weiter im Voraus, desto besser können wir Aufträge bündeln — wodurch Sie sparen.</StepHint>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {TIMEFRAMES.map(t => (
                       <OptionButton

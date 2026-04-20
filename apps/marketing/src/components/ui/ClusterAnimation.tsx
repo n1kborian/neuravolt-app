@@ -20,7 +20,7 @@ const STATUS = [
   "Einzelaufträge bundesweit",
   "Einzelaufträge bundesweit",
   "Lokale Aufträge werden zusammengelegt …",
-  "Durch Clusterung 22 % Kosten gespart",
+  "Durch Auftrags-Bündelung 22 % Kosten gespart",
 ];
 
 export function ClusterAnimation() {
