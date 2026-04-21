@@ -13,7 +13,16 @@ import {
   Phone,
   FileText,
   ArrowLeft,
+  CheckCircle2,
+  Clock,
 } from "lucide-react";
+
+const DEVICE_TYPE_LABELS: Record<string, string> = {
+  ortsveraenderlich:       "Ortsveränderliche Betriebsmittel",
+  verlaengerung:           "Verlängerungen & Steckdosenleisten",
+  handwerkzeug_maschinen:  "Handwerkzeug & Maschinen",
+  ortsfeste_anlagen:       "Ortsfeste Anlagen",
+};
 
 export const metadata = { title: "Auftragsdetails – NeuraVolt" };
 
@@ -45,6 +54,26 @@ export default async function AuftragDetailPage({
   if (!order) notFound();
 
   const status = statusLabels[order.status] ?? { label: order.status, className: "bg-muted text-muted-foreground border-border" };
+
+  const addressStreet = order.address;
+  const addressPostalCode = order.postal_code;
+  const addressCity = order.city;
+  const fullAddress = [
+    addressStreet,
+    [addressPostalCode, addressCity].filter(Boolean).join(" "),
+  ]
+    .filter(Boolean)
+    .join(", ");
+
+  const deviceCountNew = order.device_count_new;
+  const deviceCountExisting = order.device_count_existing;
+  const lastInspectionDate = order.last_inspection_date;
+  const categoryCounts: Record<string, number> = order.device_category_counts ?? {};
+  const categoryPrevious: Record<string, number> = order.device_category_counts_previous ?? {};
+  // Sortierte Kategorien-Liste ableiten: alles mit count > 0
+  const deviceTypes = Object.keys(categoryCounts).filter(k => (categoryCounts[k] ?? 0) > 0);
+  // Flexibel + desired_date = Deadline im Flexibel-Modus
+  const hasDeadline = order.desired_timeframe === "Flexibel" && Boolean(order.desired_date);
 
   return (
     <div className="p-4 md:p-8 max-w-4xl">
@@ -110,25 +139,35 @@ export default async function AuftragDetailPage({
             Auftragsdetails
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div>
-              <p className="text-xs text-muted-foreground mb-1">Standort</p>
-              <p className="text-sm font-semibold text-foreground flex items-center gap-1">
-                <MapPin className="h-3 w-3 text-muted-foreground" />
-                {order.postal_code && `${order.postal_code} `}{order.city}
+            <div className="sm:col-span-2 lg:col-span-3">
+              <p className="text-xs text-muted-foreground mb-1">Adresse der Durchführung</p>
+              <p className="text-sm font-semibold text-foreground flex items-start gap-1">
+                <MapPin className="h-3 w-3 text-muted-foreground mt-0.5 shrink-0" />
+                {fullAddress || "Adresse nicht hinterlegt"}
               </p>
             </div>
             <div>
-              <p className="text-xs text-muted-foreground mb-1">Geräteanzahl</p>
+              <p className="text-xs text-muted-foreground mb-1">Geräteanzahl gesamt</p>
               <p className="text-sm font-semibold text-foreground flex items-center gap-1">
                 <Cpu className="h-3 w-3 text-muted-foreground" />
                 {order.device_count} Geräte
               </p>
+              {!order.is_first_inspection && (
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  davon {deviceCountExisting ?? 0} bereits durch uns geprüft · {deviceCountNew ?? order.device_count} neu
+                </p>
+              )}
             </div>
             <div>
               <p className="text-xs text-muted-foreground mb-1">Prüfungsart</p>
               <p className="text-sm font-semibold text-foreground">
                 {order.is_first_inspection ? "Erstprüfung" : "Folgeprüfung"}
               </p>
+              {!order.is_first_inspection && lastInspectionDate && (
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  letzte Prüfung: {formatDate(lastInspectionDate)}
+                </p>
+              )}
             </div>
             {order.branche && (
               <div>
@@ -143,7 +182,12 @@ export default async function AuftragDetailPage({
                 {formatDate(order.desired_date)}
               </p>
               {order.desired_timeframe && (
-                <p className="text-xs text-muted-foreground mt-0.5">{order.desired_timeframe}</p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  {order.desired_timeframe}
+                  {hasDeadline && order.desired_timeframe === "Flexibel" && (
+                    <span> · spätestens {formatDate(order.desired_date)}</span>
+                  )}
+                </p>
               )}
             </div>
             {order.notes && (
@@ -154,6 +198,54 @@ export default async function AuftragDetailPage({
             )}
           </div>
         </div>
+
+        {/* Gerätekategorien */}
+        {deviceTypes.length > 0 && (
+          <div className="rounded-2xl border border-border bg-background/80 p-6">
+            <h2 className="text-sm font-bold text-foreground mb-4 flex items-center gap-2">
+              <Cpu className="h-4 w-4" />
+              Gerätekategorien
+            </h2>
+            <div className="space-y-2">
+              {deviceTypes.map(t => {
+                const label = DEVICE_TYPE_LABELS[t] ?? t;
+                const n = categoryCounts[t] ?? 0;
+                const p = categoryPrevious[t] ?? 0;
+                const isNew = order.is_first_inspection || p === 0;
+                return (
+                  <div
+                    key={t}
+                    className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-background/60 px-4 py-3"
+                  >
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-foreground">{label}</p>
+                      {!isNew && p > 0 && (
+                        <p className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1">
+                          <CheckCircle2 className="h-3 w-3" />
+                          {p} von {n} bereits durch NeuraVolt geprüft
+                        </p>
+                      )}
+                    </div>
+                    <span className="shrink-0 text-sm font-bold text-foreground">
+                      {n} Gerät{n === 1 ? "" : "e"}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Flexibel-Hinweis */}
+        {order.desired_timeframe === "Flexibel" && hasDeadline && (
+          <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 flex items-start gap-3">
+            <Clock className="h-4 w-4 text-amber-700 shrink-0 mt-0.5" />
+            <p className="text-sm text-amber-900">
+              <span className="font-semibold">Flexibler Zeitraum mit Deadline:</span>{" "}
+              Die Prüfung muss spätestens bis <strong>{formatDate(order.desired_date)}</strong> stattfinden.
+            </p>
+          </div>
+        )}
 
         {/* Pricing */}
         <div className="rounded-2xl border border-border bg-background/80 p-6">

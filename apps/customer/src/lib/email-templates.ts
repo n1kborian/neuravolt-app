@@ -65,6 +65,8 @@ export interface InspectionRequestEmailInput {
   deviceCountExisting: number | null;
   lastInspectionDate: string | null;
   deviceTypes: string[];
+  deviceCategoryCounts?: Record<string, number>;
+  deviceCategoryCountsPrevious?: Record<string, number>;
   desiredTimeframe: string | null;
   notes: string | null;
   addressStreet: string;
@@ -88,6 +90,26 @@ const DEVICE_TYPE_LABELS: Record<string, string> = {
 function deviceTypesList(types: string[]): string {
   if (types.length === 0) return "—";
   return types.map(t => DEVICE_TYPE_LABELS[t] ?? t).join(", ");
+}
+
+function deviceCategoryBreakdown(
+  types: string[],
+  counts?: Record<string, number>,
+  previous?: Record<string, number>
+): string {
+  if (!counts || types.length === 0) return deviceTypesList(types);
+  return types
+    .map(t => {
+      const label = DEVICE_TYPE_LABELS[t] ?? t;
+      const n = counts[t];
+      if (!n) return label;
+      const p = previous?.[t] ?? 0;
+      if (p > 0) {
+        return `${label} (${n}, davon ${p} bereits geprüft)`;
+      }
+      return `${label} (${n})`;
+    })
+    .join(", ");
 }
 
 function formatGermanDate(iso: string | null): string {
@@ -120,7 +142,7 @@ export function renderInspectionCustomerEmail(
             <tr><td class="label">Neue Geräte</td><td class="value">${input.deviceCountNew}</td></tr>
             <tr><td class="label">Letzte Prüfung</td><td class="value">${formatGermanDate(input.lastInspectionDate)}</td></tr>
           `}
-        <tr><td class="label">Gerätekategorien</td><td class="value">${escapeHtml(deviceTypesList(input.deviceTypes))}</td></tr>
+        <tr><td class="label">Gerätekategorien</td><td class="value">${escapeHtml(deviceCategoryBreakdown(input.deviceTypes, input.deviceCategoryCounts, input.deviceCategoryCountsPrevious))}</td></tr>
         ${input.desiredTimeframe ? `<tr><td class="label">Wunschzeitraum</td><td class="value">${escapeHtml(input.desiredTimeframe)}</td></tr>` : ""}
         <tr><td class="label">Adresse der Durchführung</td><td class="value">${escapeHtml(formatAddress(input))}</td></tr>
       </table>
@@ -172,7 +194,7 @@ export function renderInspectionTeamEmail(
             <tr><td class="label">Gesamt</td><td class="value">${total}</td></tr>
             <tr><td class="label">Letzte Prüfung</td><td class="value">${formatGermanDate(input.lastInspectionDate)}</td></tr>
           `}
-        <tr><td class="label">Gerätekategorien</td><td class="value">${escapeHtml(deviceTypesList(input.deviceTypes))}</td></tr>
+        <tr><td class="label">Gerätekategorien</td><td class="value">${escapeHtml(deviceCategoryBreakdown(input.deviceTypes, input.deviceCategoryCounts, input.deviceCategoryCountsPrevious))}</td></tr>
         ${input.desiredTimeframe ? `<tr><td class="label">Wunschzeitraum</td><td class="value">${escapeHtml(input.desiredTimeframe)}</td></tr>` : ""}
       </table>
     </div>

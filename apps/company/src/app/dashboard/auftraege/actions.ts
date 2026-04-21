@@ -13,8 +13,14 @@ export type Order = {
   customer_phone: string | null;
   city: string;
   postal_code: string | null;
+  address: string | null;
   branche: string | null;
   device_count: number;
+  device_count_new: number | null;
+  device_count_existing: number | null;
+  last_inspection_date: string | null;
+  device_category_counts: Record<string, number>;
+  device_category_counts_previous: Record<string, number>;
   is_first_inspection: boolean;
   desired_date: string | null;
   desired_timeframe: string | null;
@@ -28,6 +34,7 @@ export type Order = {
   booked_at: string | null;
   protocol_path: string | null;
   protocol_uploaded_at: string | null;
+  inspection_request_id: string | null;
 };
 
 export type OrderFilters = {

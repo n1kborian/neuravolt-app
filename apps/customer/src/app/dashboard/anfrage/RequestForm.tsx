@@ -14,12 +14,14 @@ export function RequestForm() {
   );
 
   const [inspectionType, setInspectionType] = useState<"first" | "followup">("first");
-  const [deviceCountNew, setDeviceCountNew] = useState(20);
-  const [deviceCountExisting, setDeviceCountExisting] = useState(0);
   const [deviceTypes, setDeviceTypes] = useState<string[]>([]);
+  // Anzahl pro Kategorie (wird nur gesendet wenn Kategorie gecheckt ist).
+  const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>({});
+  // Bei Folgeprüfung: wie viele der Kategorie-Geräte wurden bereits durch uns geprüft.
+  const [categoryPreviouslyInspected, setCategoryPreviouslyInspected] = useState<Record<string, number>>({});
+  const [desiredTimeframe, setDesiredTimeframe] = useState<string>("");
 
   const hasShortInterval = deviceTypes.some(v => SHORT_INTERVAL_VALUES.includes(v));
-  const total = deviceCountNew + (inspectionType === "followup" ? deviceCountExisting : 0);
 
   if (state?.ok) {
     return (
@@ -53,10 +55,49 @@ export function RequestForm() {
   const fieldErrors = state && !state.ok ? state.fieldErrors ?? {} : {};
 
   function toggleType(value: string) {
-    setDeviceTypes(prev =>
-      prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]
-    );
+    setDeviceTypes(prev => {
+      const active = prev.includes(value);
+      if (active) {
+        // Beim Abwählen Counts zurücksetzen
+        setCategoryCounts(c => {
+          const next = { ...c };
+          delete next[value];
+          return next;
+        });
+        setCategoryPreviouslyInspected(c => {
+          const next = { ...c };
+          delete next[value];
+          return next;
+        });
+        return prev.filter(v => v !== value);
+      }
+      // Neu ankreuzen: Default 0 setzen
+      setCategoryCounts(c => ({ ...c, [value]: c[value] ?? 0 }));
+      setCategoryPreviouslyInspected(c => ({ ...c, [value]: c[value] ?? 0 }));
+      return [...prev, value];
+    });
   }
+
+  function updateCategoryCount(value: string, n: number) {
+    const clamped = Math.max(0, Math.min(10000, Number.isFinite(n) ? n : 0));
+    setCategoryCounts(c => ({ ...c, [value]: clamped }));
+  }
+
+  function updateCategoryPrevious(value: string, n: number) {
+    const max = categoryCounts[value] ?? 0;
+    const clamped = Math.max(0, Math.min(max, Number.isFinite(n) ? n : 0));
+    setCategoryPreviouslyInspected(c => ({ ...c, [value]: clamped }));
+  }
+
+  const totalFromCategories = deviceTypes.reduce(
+    (sum, v) => sum + (categoryCounts[v] ?? 0),
+    0
+  );
+  const totalPreviouslyInspected = deviceTypes.reduce(
+    (sum, v) => sum + (categoryPreviouslyInspected[v] ?? 0),
+    0
+  );
+  const totalNewFromCategories = totalFromCategories - totalPreviouslyInspected;
 
   return (
     <form action={formAction} className="space-y-6">
@@ -93,53 +134,22 @@ export function RequestForm() {
         </div>
       </fieldset>
 
-      {/* Device counts */}
-      {inspectionType === "first" ? (
-        <Counter
-          label="Anzahl der zu prüfenden Geräte"
-          name="deviceCountNew"
-          value={deviceCountNew}
-          onChange={setDeviceCountNew}
-          error={fieldErrors.deviceCountNew}
-        />
-      ) : (
-        <div className="space-y-4">
-          <Counter
-            label="Bereits geprüfte Geräte"
-            hint="Geräte aus der letzten DGUV-Prüfung, die erneut geprüft werden müssen."
-            name="deviceCountExisting"
-            value={deviceCountExisting}
-            onChange={setDeviceCountExisting}
-            error={fieldErrors.deviceCountExisting}
+      {/* Bei Folgeprüfung: nur das Datum — Geräte-Counts leben in den Kategorie-Boxen unten */}
+      {inspectionType === "followup" && (
+        <div>
+          <label htmlFor="lastInspectionDate" className="block text-sm font-semibold text-foreground mb-1.5">
+            Datum der letzten Prüfung
+          </label>
+          <input
+            id="lastInspectionDate"
+            type="date"
+            name="lastInspectionDate"
+            required
+            max={new Date().toISOString().slice(0, 10)}
+            className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:border-foreground transition"
           />
-          <Counter
-            label="Neue Geräte"
-            hint="Geräte, die seit der letzten Prüfung hinzugekommen sind und erstmals geprüft werden."
-            name="deviceCountNew"
-            value={deviceCountNew}
-            onChange={setDeviceCountNew}
-            error={fieldErrors.deviceCountNew}
-          />
-          <div>
-            <label htmlFor="lastInspectionDate" className="block text-sm font-semibold text-foreground mb-1.5">
-              Datum der letzten Prüfung
-            </label>
-            <input
-              id="lastInspectionDate"
-              type="date"
-              name="lastInspectionDate"
-              required
-              max={new Date().toISOString().slice(0, 10)}
-              className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:border-foreground transition"
-            />
-            {fieldErrors.lastInspectionDate && (
-              <p className="text-xs text-red-600 mt-1.5">{fieldErrors.lastInspectionDate}</p>
-            )}
-          </div>
-          {total > 0 && (
-            <p className="text-xs text-muted-foreground">
-              Insgesamt zu prüfen: <span className="font-semibold text-foreground">{total} Gerät{total === 1 ? "" : "e"}</span>
-            </p>
+          {fieldErrors.lastInspectionDate && (
+            <p className="text-xs text-red-600 mt-1.5">{fieldErrors.lastInspectionDate}</p>
           )}
         </div>
       )}
@@ -155,34 +165,147 @@ export function RequestForm() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {DEVICE_TYPES.map(({ value, label, hint }) => {
             const checked = deviceTypes.includes(value);
+            const count = categoryCounts[value] ?? 0;
+            const countError = fieldErrors[`categoryCount.${value}`];
             return (
-              <label
+              <div
                 key={value}
-                className={`flex cursor-pointer items-start gap-3 rounded-xl border p-4 transition ${
+                className={`rounded-xl border transition ${
                   checked
                     ? "border-foreground bg-foreground/5"
                     : "border-border bg-background hover:border-foreground/30"
                 }`}
               >
-                <input
-                  type="checkbox"
-                  name="deviceTypes"
-                  value={value}
-                  checked={checked}
-                  onChange={() => toggleType(value)}
-                  className="mt-0.5 h-4 w-4 rounded border-border text-foreground focus:ring-foreground"
-                />
-                <span className="min-w-0">
-                  <span className="block text-sm font-semibold text-foreground">{label}</span>
-                  <span className="block text-xs text-muted-foreground mt-0.5">{hint}</span>
-                </span>
-              </label>
+                <label className="flex cursor-pointer items-start gap-3 p-4">
+                  <input
+                    type="checkbox"
+                    name="deviceTypes"
+                    value={value}
+                    checked={checked}
+                    onChange={() => toggleType(value)}
+                    className="mt-0.5 h-4 w-4 rounded border-border text-foreground focus:ring-foreground"
+                  />
+                  <span className="min-w-0">
+                    <span className="block text-sm font-semibold text-foreground">{label}</span>
+                    <span className="block text-xs text-muted-foreground mt-0.5">{hint}</span>
+                  </span>
+                </label>
+                {checked && (
+                  <div className="border-t border-border/60 px-4 py-3 space-y-3">
+                    <div>
+                      <label htmlFor={`count-${value}`} className="block text-xs font-semibold text-foreground mb-1.5">
+                        Anzahl Geräte
+                      </label>
+                      <div className="inline-flex items-center gap-1 rounded-lg border border-border bg-background p-1">
+                        <button
+                          type="button"
+                          onClick={() => updateCategoryCount(value, count - 1)}
+                          className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-muted transition text-foreground"
+                          aria-label="Weniger"
+                        >
+                          <Minus className="h-3.5 w-3.5" />
+                        </button>
+                        <input
+                          id={`count-${value}`}
+                          type="number"
+                          inputMode="numeric"
+                          min={0}
+                          max={10000}
+                          value={count}
+                          onChange={e => updateCategoryCount(value, parseInt(e.target.value, 10))}
+                          className="w-14 text-center bg-transparent text-foreground font-semibold text-sm focus:outline-none"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => updateCategoryCount(value, count + 1)}
+                          className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-muted transition text-foreground"
+                          aria-label="Mehr"
+                        >
+                          <Plus className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                      {countError && <p className="text-xs text-red-600 mt-1.5">{countError}</p>}
+                    </div>
+
+                    {inspectionType === "followup" && (
+                      <div>
+                        <label htmlFor={`prev-${value}`} className="block text-xs font-semibold text-foreground mb-1.5">
+                          Davon bereits durch uns geprüft
+                        </label>
+                        <div className="inline-flex items-center gap-1 rounded-lg border border-border bg-background p-1">
+                          <button
+                            type="button"
+                            onClick={() => updateCategoryPrevious(value, (categoryPreviouslyInspected[value] ?? 0) - 1)}
+                            className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-muted transition text-foreground"
+                            aria-label="Weniger"
+                          >
+                            <Minus className="h-3.5 w-3.5" />
+                          </button>
+                          <input
+                            id={`prev-${value}`}
+                            type="number"
+                            inputMode="numeric"
+                            min={0}
+                            max={count}
+                            value={categoryPreviouslyInspected[value] ?? 0}
+                            onChange={e => updateCategoryPrevious(value, parseInt(e.target.value, 10))}
+                            className="w-14 text-center bg-transparent text-foreground font-semibold text-sm focus:outline-none"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => updateCategoryPrevious(value, (categoryPreviouslyInspected[value] ?? 0) + 1)}
+                            className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-muted transition text-foreground"
+                            aria-label="Mehr"
+                          >
+                            <Plus className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                        {fieldErrors[`categoryPrev.${value}`] && (
+                          <p className="text-xs text-red-600 mt-1.5">{fieldErrors[`categoryPrev.${value}`]}</p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>
         {fieldErrors.deviceTypes && (
           <p className="text-xs text-red-600 mt-2">{fieldErrors.deviceTypes}</p>
         )}
+        {deviceTypes.length > 0 && (
+          <div className="mt-3 rounded-xl border border-border bg-muted/40 px-4 py-3 text-xs text-muted-foreground space-y-1">
+            <p>
+              Summe: <span className="font-semibold text-foreground">{totalFromCategories} Gerät{totalFromCategories === 1 ? "" : "e"}</span>
+            </p>
+            {inspectionType === "followup" && totalFromCategories > 0 && (
+              <p>
+                Davon bereits durch uns geprüft: <span className="font-semibold text-foreground">{totalPreviouslyInspected}</span>
+                {" "}· Neu zu prüfen: <span className="font-semibold text-foreground">{totalNewFromCategories}</span>
+              </p>
+            )}
+          </div>
+        )}
+        {/* Serialized category counts for the server action */}
+        <input
+          type="hidden"
+          name="categoryCounts"
+          value={JSON.stringify(
+            Object.fromEntries(
+              deviceTypes.map(v => [v, categoryCounts[v] ?? 0])
+            )
+          )}
+        />
+        <input
+          type="hidden"
+          name="categoryPreviouslyInspected"
+          value={JSON.stringify(
+            Object.fromEntries(
+              deviceTypes.map(v => [v, categoryPreviouslyInspected[v] ?? 0])
+            )
+          )}
+        />
         {hasShortInterval && (
           <div className="mt-3 flex items-start gap-2 rounded-xl border border-amber-200 bg-amber-50 p-3">
             <Sparkles className="h-4 w-4 text-amber-700 shrink-0 mt-0.5" />
@@ -194,22 +317,46 @@ export function RequestForm() {
       </fieldset>
 
       {/* Timeframe */}
-      <div>
-        <label htmlFor="desiredTimeframe" className="block text-sm font-semibold text-foreground mb-1.5">
-          Wunschzeitraum für die Prüfung
-        </label>
-        <select
-          id="desiredTimeframe"
-          name="desiredTimeframe"
-          required
-          defaultValue=""
-          className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:border-foreground transition"
-        >
-          <option value="" disabled>Bitte wählen …</option>
-          {TIMEFRAMES.map(t => <option key={t} value={t}>{t}</option>)}
-        </select>
-        {fieldErrors.desiredTimeframe && (
-          <p className="text-xs text-red-600 mt-1.5">{fieldErrors.desiredTimeframe}</p>
+      <div className="space-y-3">
+        <div>
+          <label htmlFor="desiredTimeframe" className="block text-sm font-semibold text-foreground mb-1.5">
+            Wunschzeitraum für die Prüfung
+          </label>
+          <select
+            id="desiredTimeframe"
+            name="desiredTimeframe"
+            required
+            value={desiredTimeframe}
+            onChange={e => setDesiredTimeframe(e.target.value)}
+            className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:border-foreground transition"
+          >
+            <option value="" disabled>Bitte wählen …</option>
+            {TIMEFRAMES.map(t => <option key={t} value={t}>{t}</option>)}
+          </select>
+          {fieldErrors.desiredTimeframe && (
+            <p className="text-xs text-red-600 mt-1.5">{fieldErrors.desiredTimeframe}</p>
+          )}
+        </div>
+
+        {desiredTimeframe === "Flexibel" && (
+          <div>
+            <label htmlFor="desiredDeadline" className="block text-sm font-semibold text-foreground mb-1.5">
+              Prüfung bis spätestens zum
+            </label>
+            <p className="text-xs text-muted-foreground mb-2">
+              Optional — wir richten uns im Flexibel-Modus nach Ihnen, respektieren aber diesen Stichtag.
+            </p>
+            <input
+              id="desiredDeadline"
+              type="date"
+              name="desiredDeadline"
+              min={new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().slice(0, 10)}
+              className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:border-foreground transition"
+            />
+            {fieldErrors.desiredDeadline && (
+              <p className="text-xs text-red-600 mt-1.5">{fieldErrors.desiredDeadline}</p>
+            )}
+          </div>
         )}
       </div>
 

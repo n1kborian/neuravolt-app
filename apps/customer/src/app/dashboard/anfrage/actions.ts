@@ -17,6 +17,28 @@ function toInt(v: FormDataEntryValue | null): number | null {
   return Number.isFinite(n) ? n : null;
 }
 
+function parseCategoryCounts(raw: FormDataEntryValue | null): Record<string, number> {
+  if (typeof raw !== "string" || raw.length === 0) return {};
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    if (!parsed || typeof parsed !== "object") return {};
+    return Object.fromEntries(
+      Object.entries(parsed as Record<string, unknown>)
+        .filter(
+          ([k, v]) =>
+            DEVICE_TYPES.some(t => t.value === k) &&
+            typeof v === "number" &&
+            Number.isFinite(v) &&
+            v >= 0 &&
+            v <= 10000
+        )
+        .map(([k, v]) => [k, Math.round(v as number)])
+    );
+  } catch {
+    return {};
+  }
+}
+
 function projectRefFromUrl(url: string | undefined): string | undefined {
   if (!url) return undefined;
   const match = url.match(/https:\/\/([a-z0-9]+)\.supabase\.co/i);
@@ -36,33 +58,23 @@ export async function submitInspectionRequest(
     DEVICE_TYPES.some(t => t.value === v)
   );
   const desiredTimeframe = String(formData.get("desiredTimeframe") ?? "").trim();
+  const desiredDeadlineRaw = String(formData.get("desiredDeadline") ?? "").trim();
   const notes = String(formData.get("notes") ?? "").trim();
 
-  const deviceCountNew = toInt(formData.get("deviceCountNew"));
-  const deviceCountExistingRaw = toInt(formData.get("deviceCountExisting"));
   const lastInspectionDateRaw = String(formData.get("lastInspectionDate") ?? "").trim();
 
   const addressStreet = String(formData.get("addressStreet") ?? "").trim();
   const addressPostalCode = String(formData.get("addressPostalCode") ?? "").trim();
   const addressCity = String(formData.get("addressCity") ?? "").trim();
 
+  // Per-category counts — gesamte Anzahl pro Kategorie
+  const categoryCounts = parseCategoryCounts(formData.get("categoryCounts"));
+  // Bei Folgeprüfung: wie viele davon bereits durch uns geprüft
+  const categoryPreviouslyInspected = parseCategoryCounts(formData.get("categoryPreviouslyInspected"));
+
   const fieldErrors: Record<string, string> = {};
 
-  if (deviceCountNew === null || deviceCountNew < 0 || deviceCountNew > 10000) {
-    fieldErrors.deviceCountNew = "Bitte eine gültige Anzahl (0–10.000) angeben.";
-  }
-
-  if (isFirstInspection) {
-    if ((deviceCountNew ?? 0) < 1) {
-      fieldErrors.deviceCountNew = "Bei Erstprüfung mindestens ein Gerät angeben.";
-    }
-  } else {
-    if (deviceCountExistingRaw === null || deviceCountExistingRaw < 0 || deviceCountExistingRaw > 10000) {
-      fieldErrors.deviceCountExisting = "Bitte Anzahl der bereits geprüften Geräte angeben.";
-    }
-    if ((deviceCountExistingRaw ?? 0) + (deviceCountNew ?? 0) < 1) {
-      fieldErrors.deviceCountExisting = "Insgesamt muss mindestens ein Gerät geprüft werden.";
-    }
+  if (!isFirstInspection) {
     if (!lastInspectionDateRaw) {
       fieldErrors.lastInspectionDate = "Datum der letzten Prüfung angeben.";
     } else if (!/^\d{4}-\d{2}-\d{2}$/.test(lastInspectionDateRaw)) {
@@ -72,10 +84,51 @@ export async function submitInspectionRequest(
 
   if (deviceTypes.length === 0) {
     fieldErrors.deviceTypes = "Mindestens eine Gerätekategorie auswählen.";
+  } else {
+    // Pro Kategorie: Anzahl ≥ 1 zwingend; previouslyInspected ≤ Anzahl
+    for (const t of deviceTypes) {
+      const c = categoryCounts[t] ?? 0;
+      if (c < 1) {
+        fieldErrors[`categoryCount.${t}`] = "Bitte Anzahl angeben.";
+      }
+      if (!isFirstInspection) {
+        const p = categoryPreviouslyInspected[t] ?? 0;
+        if (p > c) {
+          fieldErrors[`categoryPrev.${t}`] = "Darf nicht größer als die Gesamtanzahl sein.";
+        }
+      }
+    }
   }
+
+  // Abgeleitete Gesamtanzahlen aus den Kategorie-Counts
+  const totalDevicesFromCategories = deviceTypes.reduce(
+    (sum, t) => sum + (categoryCounts[t] ?? 0),
+    0
+  );
+  const totalPreviouslyInspected = isFirstInspection
+    ? 0
+    : deviceTypes.reduce((sum, t) => sum + (categoryPreviouslyInspected[t] ?? 0), 0);
+  const derivedDeviceCountNew = totalDevicesFromCategories - totalPreviouslyInspected;
 
   if (!desiredTimeframe) {
     fieldErrors.desiredTimeframe = "Zeitraum wählen.";
+  }
+
+  // Flexibel-Deadline: optional, aber wenn gesetzt muss sie in der Zukunft liegen.
+  let desiredDeadline: string | null = null;
+  if (desiredTimeframe === "Flexibel" && desiredDeadlineRaw) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(desiredDeadlineRaw)) {
+      fieldErrors.desiredDeadline = "Ungültiges Datum.";
+    } else {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const deadline = new Date(desiredDeadlineRaw);
+      if (deadline.getTime() <= today.getTime()) {
+        fieldErrors.desiredDeadline = "Datum muss in der Zukunft liegen.";
+      } else {
+        desiredDeadline = desiredDeadlineRaw;
+      }
+    }
   }
 
   if (notes.length > 2000) {
@@ -106,11 +159,14 @@ export async function submitInspectionRequest(
     .insert({
       user_id: user.id,
       is_first_inspection: isFirstInspection,
-      device_count_new: deviceCountNew!,
-      device_count_existing: isFirstInspection ? null : deviceCountExistingRaw!,
+      device_count_new: derivedDeviceCountNew,
+      device_count_existing: isFirstInspection ? null : totalPreviouslyInspected,
       last_inspection_date: isFirstInspection ? null : lastInspectionDateRaw,
       device_types: deviceTypes,
+      device_category_counts: categoryCounts,
+      device_category_counts_previous: isFirstInspection ? {} : categoryPreviouslyInspected,
       desired_timeframe: desiredTimeframe,
+      desired_deadline: desiredDeadline,
       notes: notes || null,
       address_street: addressStreet,
       address_postal_code: addressPostalCode,
@@ -134,10 +190,12 @@ export async function submitInspectionRequest(
         customerCompany: user.profile.company_name ?? null,
         customerPhone: user.profile.phone ?? null,
         isFirstInspection,
-        deviceCountNew: deviceCountNew!,
-        deviceCountExisting: isFirstInspection ? null : deviceCountExistingRaw!,
+        deviceCountNew: derivedDeviceCountNew,
+        deviceCountExisting: isFirstInspection ? null : totalPreviouslyInspected,
         lastInspectionDate: isFirstInspection ? null : lastInspectionDateRaw,
         deviceTypes,
+        deviceCategoryCounts: categoryCounts,
+        deviceCategoryCountsPrevious: isFirstInspection ? undefined : categoryPreviouslyInspected,
         desiredTimeframe: desiredTimeframe || null,
         notes: notes || null,
         addressStreet,
