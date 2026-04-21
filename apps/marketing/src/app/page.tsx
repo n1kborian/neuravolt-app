@@ -21,42 +21,16 @@ export const metadata = {
   },
 };
 
-const homeJsonLd = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "NeuraVolt",
-    url: "https://neuravolt.de",
-    email: "info@neuravolt.de",
-    logo: "https://neuravolt.de/icon.png",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Schwalbenweg 6",
-      addressLocality: "Korntal-Münchingen",
-      postalCode: "70825",
-      addressCountry: "DE",
-    },
-    areaServed: [
-      { "@type": "City", name: "Stuttgart" },
-      { "@type": "City", name: "Ludwigsburg" },
-      { "@type": "City", name: "Esslingen am Neckar" },
-      { "@type": "City", name: "Sindelfingen" },
-      { "@type": "City", name: "Leonberg" },
-      { "@type": "City", name: "Ditzingen" },
-    ],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: "DGUV V3 Betriebsmittelprüfung",
-    serviceType: "Elektroprüfung nach DGUV Vorschrift 3",
-    description:
-      "Rechtssichere DGUV V3 Prüfung elektrischer Betriebsmittel durch zertifizierte Partner­fachkräfte — digital dokumentiert, mit automatischem Fristenmanagement.",
-    provider: {
-      "@type": "LocalBusiness",
+const homeJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://neuravolt.de/#organization",
       name: "NeuraVolt",
       url: "https://neuravolt.de",
       email: "info@neuravolt.de",
+      logo: "https://neuravolt.de/icon.png",
       address: {
         "@type": "PostalAddress",
         streetAddress: "Schwalbenweg 6",
@@ -64,19 +38,36 @@ const homeJsonLd = [
         postalCode: "70825",
         addressCountry: "DE",
       },
+      areaServed: [
+        { "@type": "City", name: "Stuttgart" },
+        { "@type": "City", name: "Ludwigsburg" },
+        { "@type": "City", name: "Esslingen am Neckar" },
+        { "@type": "City", name: "Sindelfingen" },
+        { "@type": "City", name: "Leonberg" },
+        { "@type": "City", name: "Ditzingen" },
+      ],
     },
-    areaServed: "Stuttgart & Metropolregion",
-    offers: {
-      "@type": "Offer",
-      priceSpecification: {
-        "@type": "UnitPriceSpecification",
-        price: "4.90",
-        priceCurrency: "EUR",
-        unitText: "Gerät",
+    {
+      "@type": "Service",
+      "@id": "https://neuravolt.de/#service",
+      name: "DGUV V3 Betriebsmittelprüfung",
+      serviceType: "Elektroprüfung nach DGUV Vorschrift 3",
+      description:
+        "Rechtssichere DGUV V3 Prüfung elektrischer Betriebsmittel durch zertifizierte Partnerfachkräfte — digital dokumentiert, mit automatischem Fristenmanagement.",
+      provider: { "@id": "https://neuravolt.de/#organization" },
+      areaServed: "Stuttgart & Metropolregion",
+      offers: {
+        "@type": "Offer",
+        priceSpecification: {
+          "@type": "UnitPriceSpecification",
+          price: "4.90",
+          priceCurrency: "EUR",
+          unitText: "Gerät",
+        },
       },
     },
-  },
-];
+  ],
+};
 
 export default function HomePage() {
   return (

@@ -86,7 +86,7 @@ export default async function StadtOverviewPage(
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight mb-5">
                   DGUV V3 Prüfung in {loc.name}
                 </h1>
-                <p className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-xl">
+                <p className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-xl text-justify hyphens-auto">
                   {loc.intro}
                 </p>
                 <div className="flex flex-wrap gap-3">

@@ -106,7 +106,7 @@ export default function HeroSection() {
               {/* Image */}
               <div className="aspect-video relative overflow-hidden rounded-lg border border-border mb-6">
                 <Image
-                  src="/images/hero-inspection.jpg"
+                  src="/images/hero-inspection-plug.jpeg"
                   fill
                   alt="Elektrofachkraft bei DGUV V3 Betriebsmittelprüfung mit Messgerät"
                   className="object-cover object-center"

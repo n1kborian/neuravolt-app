@@ -109,7 +109,7 @@ export default function PageClient() {
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight mb-5">
                   Ihre DGUV V3 Prüfung — digitalisiert & automatisiert.
                 </h1>
-                <p className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-xl">
+                <p className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-xl text-justify hyphens-auto">
                   NeuraVolt übernimmt die gesetzlich vorgeschriebene Betriebsmittelprüfung nach DGUV Vorschrift 3 für Ihr Unternehmen. Zertifizierte Partnerfachkräfte führen vor Ort durch, unsere Plattform erledigt alles drumherum: Terminplanung, Dokumentation, Fristen — einfach, schnell, rechtssicher.
                 </p>
                 <div className="flex flex-wrap gap-3">
@@ -163,10 +163,10 @@ export default function PageClient() {
                 <h2 className="text-3xl sm:text-4xl font-bold text-foreground leading-tight mb-4">
                   Was ist die DGUV Vorschrift 3?
                 </h2>
-                <p className="text-muted-foreground text-lg leading-relaxed mb-4">
+                <p className="text-muted-foreground text-lg leading-relaxed mb-4 text-justify hyphens-auto">
                   Die <strong className="text-foreground">DGUV Vorschrift 3</strong> (früher BGV A3) verpflichtet jedes Unternehmen, elektrische Anlagen und Betriebsmittel regelmäßig von einer Elektrofachkraft prüfen zu lassen.
                 </p>
-                <p className="text-muted-foreground text-lg leading-relaxed">
+                <p className="text-muted-foreground text-lg leading-relaxed text-justify hyphens-auto">
                   Betroffen sind <strong className="text-foreground">alle Betriebe</strong> mit elektrischen Geräten — vom Einzelbüro über die Arztpraxis bis zur Produktionshalle.
                 </p>
               </div>
@@ -209,7 +209,7 @@ export default function PageClient() {
               <h2 className="text-3xl sm:text-4xl font-bold text-foreground leading-tight mb-3">
                 Was wir bei Ihnen prüfen
               </h2>
-              <p className="text-muted-foreground text-lg max-w-2xl">
+              <p className="text-muted-foreground text-lg max-w-2xl text-justify hyphens-auto">
                 Jede Prüfung erfolgt nach DIN VDE 0701-0702 bzw. DIN VDE 0105-100 durch eine zertifizierte Elektrofachkraft — lückenlos dokumentiert.
               </p>
             </motion.div>
@@ -248,7 +248,7 @@ export default function PageClient() {
                     </li>
                   ))}
                 </ul>
-                <p className="text-xs text-muted-foreground leading-relaxed mt-5 pt-5 border-t border-border">
+                <p className="text-xs text-muted-foreground leading-relaxed mt-5 pt-5 border-t border-border text-justify hyphens-auto">
                   Jede Messung wird digital erfasst, ausgewertet und im Protokoll gerichtsfest dokumentiert.
                 </p>
               </motion.div>
@@ -272,7 +272,7 @@ export default function PageClient() {
               <h2 className="text-3xl sm:text-4xl font-bold text-foreground leading-tight mb-3">
                 In vier Schritten zur DGUV-Compliance
               </h2>
-              <p className="text-muted-foreground text-lg">
+              <p className="text-muted-foreground text-lg text-justify hyphens-auto">
                 Kein Koordinationsaufwand, keine Papierprotokolle, keine Fristenverfolgung. Wir übernehmen alles — Sie machen weiter Ihr Kerngeschäft.
               </p>
             </motion.div>
@@ -284,9 +284,11 @@ export default function PageClient() {
                   animate={processIn ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: i * 0.08 }}
                   className="group rounded-2xl border border-border bg-background/80 backdrop-blur-sm p-6 shadow-lg transition-all duration-300 hover:border-brand hover:shadow-xl">
-                  <span className="text-2xl font-bold text-foreground/20 font-mono transition-colors duration-300 group-hover:text-brand">{step}</span>
-                  <p className="text-base font-bold text-foreground mt-3 mb-1.5">{title}</p>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-2xl font-bold text-foreground/20 font-mono transition-colors duration-300 group-hover:text-brand shrink-0">{step}</span>
+                    <p className="text-base font-bold text-foreground leading-tight">{title}</p>
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed text-justify hyphens-auto">{desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -309,7 +311,7 @@ export default function PageClient() {
               <h2 className="text-3xl sm:text-4xl font-bold text-foreground leading-tight mb-3">
                 Der Unterschied zu klassischen Prüfdiensten
               </h2>
-              <p className="text-muted-foreground text-lg max-w-2xl">
+              <p className="text-muted-foreground text-lg max-w-2xl text-justify hyphens-auto">
                 Statt Einzelprüfern mit Excel-Listen und Papiermappen: eine Plattform, die Prüfaufträge KI-gestützt an zertifizierte Partner im Netzwerk verteilt und den gesamten Prozess digital abbildet.
               </p>
             </motion.div>

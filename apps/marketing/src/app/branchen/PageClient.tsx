@@ -141,10 +141,10 @@ export default function PageClient() {
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight mb-5">
                 DGUV V3 Prüfung —<br />passgenau für Ihre Branche.
               </h1>
-              <p className="text-muted-foreground text-lg leading-relaxed mb-4">
+              <p className="text-muted-foreground text-lg leading-relaxed mb-4 text-justify hyphens-auto">
                 Jede Branche bringt eigene Prüfintervalle, typische Gerätekategorien und betriebliche Rahmenbedingungen mit sich. NeuraVolt kennt die Anforderungen aus Büro, Gastronomie, Medizin, Hotellerie, Handwerk und Retail — und prüft Ihre Betriebsmittel branchengerecht, rechtssicher und ohne Aufwand für Sie.
               </p>
-              <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+              <p className="text-muted-foreground text-lg leading-relaxed mb-8 text-justify hyphens-auto">
                 Als digitale Plattform für die DGUV V3 Betriebsmittelprüfung in Stuttgart und der gesamten Metropolregion übernehmen wir Planung, Prüfung durch zertifizierte Elektrofachkräfte, digitale Protokollierung und das Fristenmanagement — ab 4,90 € pro Gerät.
               </p>
               <div className="flex flex-wrap gap-3">

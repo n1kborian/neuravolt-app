@@ -42,7 +42,7 @@ export default function PageClient() {
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight mb-5">
                 Stuttgart & Metropolregion.
               </h1>
-              <p className="text-muted-foreground text-lg leading-relaxed">
+              <p className="text-muted-foreground text-lg leading-relaxed text-justify hyphens-auto">
                 NeuraVolt ist aktuell in Stuttgart und der gesamten Metropolregion aktiv und führt DGUV V3 Prüfungen vor Ort durch. Weitere Regionen folgen.
               </p>
             </motion.div>
