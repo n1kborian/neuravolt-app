@@ -14,6 +14,17 @@ const schema = z.object({
   branche: z.string().max(120).optional(),
   consentPrivacy: z.literal(true),
   turnstileToken: z.string().min(1).max(2048),
+  // Fristen-Rechner (optional): wenn gesetzt, wird Erinnerung aktiviert.
+  deviceTypes: z.array(z.enum([
+    "ortsveraenderlich",
+    "verlaengerung",
+    "handwerkzeug_maschinen",
+    "ortsfeste_anlagen",
+  ])).optional(),
+  environment: z.enum(["buero", "werkstatt"]).optional(),
+  lastInspectionDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  nextDueDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  reminderActive: z.boolean().optional(),
 });
 
 export async function POST(request: Request) {
@@ -50,6 +61,11 @@ export async function POST(request: Request) {
         consent_privacy: data.consentPrivacy,
         user_agent: userAgent,
         ip_hash: ipHash,
+        device_types: data.deviceTypes ?? [],
+        environment: data.environment ?? null,
+        last_inspection_date: data.lastInspectionDate ?? null,
+        next_due_date: data.nextDueDate ?? null,
+        reminder_active: data.reminderActive ?? false,
       },
       { onConflict: "email" }
     );

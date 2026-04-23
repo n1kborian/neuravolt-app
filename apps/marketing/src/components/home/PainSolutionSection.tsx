@@ -8,7 +8,7 @@ const cases = [
     target: "Gastro & Einzelhandel",
     pain: "Ich weiß, dass ich prüfen lassen muss — aber drei Angebote einzuholen, Preise zu vergleichen und auf Termine zu warten kostet Zeit, die ich im Tagesgeschäft nicht habe.",
     solution:
-      "Festpreis online in zwei Minuten. Termin direkt gebucht. Keine Angebote vergleichen, keine Anrufschleifen — Sie sehen Preis, buchen, fertig.",
+      "Festpreis online in zwei Minuten. Termin direkt gebucht. Keine Angebote vergleichen, keine Anrufschleifen — Sie erhalten direkt ein Angebot, buchen, fertig.",
   },
   {
     target: "Büro & Verwaltung",
